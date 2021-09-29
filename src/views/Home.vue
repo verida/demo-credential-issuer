@@ -1,18 +1,295 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="app-section">
+    <div class="credential-form">
+      <img src="../assets/images/mapay_logo.png" alt="mapay" />
+      <h1>Register Licensed Professional</h1>
+
+      <form @submit.prevent="onSubmit">
+        <div class="grid-form">
+          <div class="form-block">
+            <label for="did-number"> DID </label>
+            <input
+              required
+              type="text"
+              name="did-number"
+              v-model="did"
+              id="did-number"
+            />
+          </div>
+          <div class="form-block">
+            <label for="healt-type"> Health professional type </label>
+            <div class="dropdown">
+              <div class="dropdown-value" @click="toggleSelect">
+                <span>{{ healthSelectType }}</span>
+                <img
+                  src="../assets/images/arrow_up.png"
+                  alt="mapay"
+                  v-if="selectOptions"
+                />
+                <img src="../assets/images/arrow_down.png" alt="mapay" v-else />
+              </div>
+              <div v-show="selectOptions" class="dropdown-select">
+                <div v-for="(type, index) in healthTypes" :key="index">
+                  <span @click="selectType(type)">{{ type }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-block">
+            <label for="first-name"> First Name</label>
+            <input
+              required
+              type="text"
+              v-model="firstName"
+              name="first-name"
+              id="first-name"
+            />
+          </div>
+          <div class="form-block">
+            <label for="last-name"> Last Name</label>
+            <input
+              required
+              type="text"
+              v-model="lastName"
+              name="last-name"
+              id="last-name"
+            />
+          </div>
+          <div class="form-block">
+            <label for="reg-number">Regsitration Number</label>
+            <input
+              required
+              type="text"
+              v-model="regNumber"
+              name="reg-number"
+              id="reg-number"
+            />
+          </div>
+          <div class="form-block">
+            <label for="reg-exp-date">Regsitration expiring date</label>
+            <input
+              required
+              type="date"
+              v-model="regExpDate"
+              name="reg-exp-date"
+              id="reg-exp-date"
+            />
+          </div>
+        </div>
+        <div class="submit-btn">
+          <button
+            :class="['btn-default', isSubmitting && 'loading']"
+            type="submit"
+          >
+            Issue Credential
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { veridaClient } from "@/helpers";
+
+const { VUE_APP_ORIGIN_URL } = process.env;
 
 export default defineComponent({
   name: "Home",
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      did: "",
+      firstName: "",
+      lastName: "",
+      regNumber: "",
+      healthType: "",
+      regExpDate: "",
+      healthTypes: [
+        "Dentist",
+        "Psychologist",
+        "Optometrist",
+        "Pharmacist",
+        "Allied Health Professional",
+      ],
+      healthSelectType: "Not Selected",
+      selectOptions: false,
+      isSubmitting: false,
+    };
+  },
+  methods: {
+    async onSubmit() {
+      this.isSubmitting = true;
+      console.log("cliked");
+
+      try {
+        const formValues = {
+          did: this.did,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          regNumber: this.regNumber,
+          healthType: this.healthType,
+          regExpDate: this.regExpDate,
+          schema: `${VUE_APP_ORIGIN_URL}/schema.json`,
+        };
+        await veridaClient.sendMessage(formValues);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
+    toggleSelect() {
+      this.selectOptions = !this.selectOptions;
+    },
+
+    selectType(value: string) {
+      this.healthSelectType = value;
+      this.selectOptions = false;
+    },
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.credential-form {
+  text-align: center;
+  position: absolute;
+  width: 744px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 0 1.5rem;
+  margin: auto;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+
+  @media (max-width: 768px) {
+    width: 83%;
+    margin: 8rem auto;
+  }
+
+  img {
+    margin: 2rem 0 1.5rem 0;
+  }
+
+  h1 {
+    font-weight: bold;
+    font-size: 1.8rem;
+    line-height: 140%;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #041133;
+  }
+}
+
+.dropdown {
+  position: relative;
+  &-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20.5rem;
+    height: 3rem;
+    background: #ffffff;
+    border: 1px solid #e0e3ea;
+    border-radius: 4px;
+    &:hover {
+      border: 1px solid #009fe1;
+    }
+    & > * {
+      padding: 0 1rem;
+    }
+  }
+  &-select {
+    position: absolute;
+    width: 20.5rem;
+    background: #ffffff;
+    border: 1px solid #009fe1;
+    box-sizing: border-box;
+    margin: 0.7rem auto;
+    border-radius: 4px;
+    z-index: 2;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+    div {
+      margin: 1rem auto;
+      &:hover {
+        background: #f6f7f9;
+      }
+      span {
+        display: block;
+        padding: 0.4rem;
+      }
+    }
+  }
+}
+
+form {
+  display: inline-block;
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto 3rem auto;
+
+  .btn-default {
+    height: 3rem;
+    padding: 0px 32px;
+    outline: none;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+    background: #2c558b;
+    border-radius: 4px;
+    &.loading {
+      background: #333333;
+      opacity: 0.5;
+    }
+  }
+}
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  .form-block {
+    text-align: left;
+    margin: 0.8rem 1.2rem;
+    label {
+      display: block;
+      margin-bottom: 0.125rem;
+    }
+    input {
+      width: 20.5rem;
+      height: 3rem;
+      background: #ffffff;
+      border: 1px solid #e0e3ea;
+      box-sizing: border-box;
+      border-radius: 4px;
+      outline: none;
+      &:hover {
+        background: #f8f8f8;
+        border: 1px solid #e0e3ea;
+        box-sizing: border-box;
+        border-radius: 4px;
+      }
+
+      &:focus {
+        background: #ffffff;
+        border: 1px solid #009fe1;
+        box-sizing: border-box;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+</style>
