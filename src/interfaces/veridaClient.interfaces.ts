@@ -5,11 +5,6 @@ export interface IProfileDocument {
   value?: unknown;
 }
 
-export interface IErrorMessages {
-  message: string;
-  type: string;
-}
-
 export interface IProfileDetails {
   name: string;
   country: string;

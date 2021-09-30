@@ -38,7 +38,6 @@ export default defineComponent({
       this.isLoading = true;
       try {
         await veridaClient.connectVault();
-        this.isLoading = false;
         this.$router.push({ name: "Home" });
       } catch (error) {
         console.log(error);

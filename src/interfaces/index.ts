@@ -1,5 +1,4 @@
 export type {
-  IErrorMessages,
   IProfileDetails,
   IProfileDocument,
   ICredentials,

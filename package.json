@@ -13,7 +13,8 @@
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "vue-spinner": "^1.0.4"
+    "vue-spinner": "^1.0.4",
+    "vue-toast-notification": "^2.0.1"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",

@@ -18,6 +18,9 @@
           </div>
           <div class="form-block">
             <label for="healt-type"> Health professional type </label>
+            <span v-show="validationError" class="error-message"
+              >Please choose Health professional type !
+            </span>
             <div class="dropdown">
               <div class="dropdown-value" @click="toggleSelect">
                 <span>{{ healthSelectType }}</span>
@@ -80,6 +83,7 @@
           <button
             :class="['btn-default', isSubmitting && 'loading']"
             type="submit"
+            :disabled="isSubmitting"
           >
             Issue Credential
           </button>
@@ -99,11 +103,10 @@ export default defineComponent({
   name: "Home",
   data() {
     return {
-      did: "",
+      did: veridaClient.did || "",
       firstName: "",
       lastName: "",
       regNumber: "",
-      healthType: "",
       regExpDate: "",
       healthTypes: [
         "Dentist",
@@ -115,12 +118,17 @@ export default defineComponent({
       healthSelectType: "Not Selected",
       selectOptions: false,
       isSubmitting: false,
+      validationError: false,
     };
   },
   methods: {
     async onSubmit() {
+      this.validationError = false;
+      if (this.healthSelectType === "Not Selected") {
+        this.validationError = true;
+        return;
+      }
       this.isSubmitting = true;
-      console.log("cliked");
 
       try {
         const formValues = {
@@ -128,13 +136,14 @@ export default defineComponent({
           firstName: this.firstName,
           lastName: this.lastName,
           regNumber: this.regNumber,
-          healthType: this.healthType,
+          healthType: this.healthSelectType,
           regExpDate: this.regExpDate,
           schema: `${VUE_APP_ORIGIN_URL}/schema.json`,
         };
         await veridaClient.sendMessage(formValues);
+        this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
-        console.log(error);
+        this.$toast.error("Something went wrong  ");
       } finally {
         this.isSubmitting = false;
       }
@@ -144,6 +153,8 @@ export default defineComponent({
     },
 
     selectType(value: string) {
+      console.log(value);
+
       this.healthSelectType = value;
       this.selectOptions = false;
     },
@@ -227,6 +238,11 @@ export default defineComponent({
 
 form {
   display: inline-block;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
 }
 
 .submit-btn {

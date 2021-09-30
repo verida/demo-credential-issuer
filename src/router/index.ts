@@ -7,6 +7,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     component: Credential,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/connect",
@@ -21,12 +24,18 @@ const router = createRouter({
   routes,
 });
 
-const authenticated = veridaClient.appInitialized();
-
 router.beforeEach((to, from, next) => {
-  console.log(authenticated);
-  if (to.name !== "Connect" && !authenticated) next({ name: "Connect" });
-  else next();
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (veridaClient.did) {
+      next();
+    } else {
+      next("/connect");
+    }
+  } else {
+    next();
+  }
 });
+
+// router.beforeResolve(RouteGuard);
 
 export default router;

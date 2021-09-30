@@ -1,11 +1,6 @@
 import { Network } from "@verida/client-ts";
 import { VaultAccount } from "@verida/account-web-vault";
-import {
-  IErrorMessages,
-  ICredentials,
-  IProfileDetails,
-  IProfileDocument,
-} from "@/interfaces";
+import { ICredentials, IProfileDetails, IProfileDocument } from "@/interfaces";
 
 import { EventEmitter } from "events";
 
@@ -21,7 +16,6 @@ class VeridaClient extends EventEmitter {
   private profileInstance: any;
   private account: any;
   public did?: string;
-  private error = {};
   public profile = {};
 
   /**
@@ -100,28 +94,16 @@ class VeridaClient extends EventEmitter {
 
   public async sendMessage(messageData: ICredentials): Promise<boolean> {
     const type = "inbox/type/dataSend";
-
-    try {
-      const data = {
-        data: [messageData],
-      };
-
-      const message = "New Message: New Credential";
-      const config = {
-        recipientContextName: "Verida: Vault",
-      };
-      const messaging = await this.connection.getMessaging();
-      await messaging.send(this.did, type, data, message, config);
-
-      return true;
-    } catch (error: any) {
-      return false;
-    }
-  }
-
-  handleErrors(error: IErrorMessages) {
-    this.error = error;
-    this.emit("error", error);
+    const data = {
+      data: [messageData],
+    };
+    const message = "New Message: New Credential";
+    const config = {
+      recipientContextName: "Verida: Vault",
+    };
+    const messaging = await this.connection.getMessaging();
+    await messaging.send(this.did, type, data, message, config);
+    return true;
   }
 
   async logout(): Promise<void> {
@@ -130,7 +112,7 @@ class VeridaClient extends EventEmitter {
     this.profileInstance = null;
     this.account = null;
     this.did = "";
-    this.error = {};
+
     this.profile = {};
   }
 }
