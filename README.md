@@ -1,4 +1,5 @@
 # Demo: Credential Issuing
+
 A demonstration app showing how credentials are issued and sent to a person
 
 Available at https://mapay.demos.testnet.verida.io
