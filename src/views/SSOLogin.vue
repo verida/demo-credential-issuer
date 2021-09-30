@@ -1,9 +1,12 @@
 <template>
-  <div class="login-section">
+  <div class="login-container">
     <div class="loader" v-if="isLoading">
       <pulse-loader :loading="isLoading" />
     </div>
     <div class="connect" v-else>
+      <div class="loader" v-if="isLoading">
+        <pulse-loader :loading="isLoading" />
+      </div>
       <img src="../assets/images/verida_logo.svg" alt="verida-btn" />
       <h3>Connect now</h3>
       <p>Use the button below to connect with Verida Vault</p>
@@ -61,29 +64,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.login-section {
-  position: absolute;
-  width: 45%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+@import "../assets/scss/main.scss";
 
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+.login-container {
+  @extend .app-container;
 }
-.connect {
+.loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column nowrap;
-  margin: 0 0.5rem;
-  background: #ffffff;
-  padding: 0.5rem 0.4rem;
-  box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
+}
+.connect {
+  padding: 1rem 0;
   height: 20rem;
-
   & > * {
     margin: 0.7rem 0;
   }

@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import "vue-toast-notification/dist/theme-sugar.css";
+import "./assets/scss/main.scss";
 
 createApp(App)
   .use(router)

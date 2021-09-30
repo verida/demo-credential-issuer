@@ -1,9 +1,9 @@
 <template>
+  <app-header />
   <div class="app-section">
     <div class="credential-form">
       <img src="../assets/images/mapay_logo.png" alt="mapay" />
       <h1>Register Licensed Professional</h1>
-
       <form @submit.prevent="onSubmit">
         <div class="grid-form">
           <div class="form-block">
@@ -14,6 +14,7 @@
               name="did-number"
               v-model="did"
               id="did-number"
+              placeholder="did:3:kjzl6cwe1jw14bhl9z1oxgkoy8dpbd20vv7otvr14g6i5xwotn9dnll3zpdfu4s"
             />
           </div>
           <div class="form-block">
@@ -23,7 +24,13 @@
             </span>
             <div class="dropdown">
               <div class="dropdown-value" @click="toggleSelect">
-                <span>{{ healthSelectType }}</span>
+                <span
+                  :class="[
+                    healthSelectType !== 'Not Selected' &&
+                      'dropdown-value-text',
+                  ]"
+                  >{{ healthSelectType }}</span
+                >
                 <img
                   src="../assets/images/arrow_up.png"
                   alt="mapay"
@@ -46,6 +53,7 @@
               v-model="firstName"
               name="first-name"
               id="first-name"
+              placeholder="e.g John"
             />
           </div>
           <div class="form-block">
@@ -56,6 +64,7 @@
               v-model="lastName"
               name="last-name"
               id="last-name"
+              placeholder="e.g Smith"
             />
           </div>
           <div class="form-block">
@@ -66,6 +75,7 @@
               v-model="regNumber"
               name="reg-number"
               id="reg-number"
+              placeholder="e.g BAC12920"
             />
           </div>
           <div class="form-block">
@@ -76,6 +86,7 @@
               v-model="regExpDate"
               name="reg-exp-date"
               id="reg-exp-date"
+              placeholder="dd/mm/yy"
             />
           </div>
         </div>
@@ -96,11 +107,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
-
+import AppHeader from "@/components/Header.vue";
 const { VUE_APP_ORIGIN_URL } = process.env;
 
 export default defineComponent({
   name: "Home",
+  components: {
+    AppHeader,
+  },
   data() {
     return {
       did: veridaClient.did || "",
@@ -153,8 +167,6 @@ export default defineComponent({
     },
 
     selectType(value: string) {
-      console.log(value);
-
       this.healthSelectType = value;
       this.selectOptions = false;
     },
@@ -163,24 +175,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/main.scss";
+
+.input-text {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  font-family: Nunito Sans;
+  color: rgba(4, 17, 51, 0.3);
+}
+
 .credential-form {
-  text-align: center;
-  position: absolute;
-  width: 744px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  padding: 0 1.5rem;
-  margin: auto;
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
-
-  @media (max-width: 768px) {
-    width: 83%;
-    margin: 8rem auto;
-  }
-
+  @extend .app-container;
   img {
     margin: 2rem 0 1.5rem 0;
   }
@@ -206,11 +212,15 @@ export default defineComponent({
     background: #ffffff;
     border: 1px solid #e0e3ea;
     border-radius: 4px;
+    @extend .input-text;
+    &-text {
+      color: #000;
+    }
     &:hover {
       border: 1px solid #009fe1;
     }
     & > * {
-      padding: 0 1rem;
+      padding: 0 0.8rem;
     }
   }
   &-select {
@@ -292,6 +302,12 @@ form {
       box-sizing: border-box;
       border-radius: 4px;
       outline: none;
+      padding: 0 0.8rem;
+
+      &::placeholder {
+        @extend .input-text;
+      }
+
       &:hover {
         background: #f8f8f8;
         border: 1px solid #e0e3ea;

@@ -28,7 +28,7 @@ class VeridaClient extends EventEmitter {
   }
 
   appInitialized(): boolean {
-    if (this.connection) {
+    if (this.connection?.client?.did) {
       return true;
     }
     return false;
@@ -65,6 +65,8 @@ class VeridaClient extends EventEmitter {
     this.did = await this.account.did();
     await this.initProfile();
 
+    console.log(this.connection);
+
     this.emit("initialized");
   }
 
@@ -89,7 +91,7 @@ class VeridaClient extends EventEmitter {
     };
 
     this.profileInstance.listen(cb);
-    cb();
+    await cb();
   }
 
   public async sendMessage(messageData: ICredentials): Promise<boolean> {
