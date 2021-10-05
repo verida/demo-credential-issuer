@@ -108,7 +108,6 @@
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
 import AppHeader from "@/components/Header.vue";
-import { ORIGIN_URL } from "@/constant";
 
 export default defineComponent({
   name: "Home",
@@ -152,8 +151,10 @@ export default defineComponent({
           regNumber: this.regNumber,
           healthType: this.healthSelectType,
           regExpDate: this.regExpDate,
-          schema: `${ORIGIN_URL}/schema.json`,
+          schema: `${window.location.href}schema.json`,
         };
+        console.log(formValues);
+
         await veridaClient.sendMessage(formValues);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
