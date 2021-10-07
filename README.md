@@ -22,8 +22,4 @@ npm run serve
 
 # Deployment
 
-```
-./deploy.sh
-```
-
-We are deploying to US-East because of the location of the client
+Deployment is automatically done via [AWS Amplify](https://us-east-2.console.aws.amazon.com/amplify/) for all new commits to the `main` branch. 
