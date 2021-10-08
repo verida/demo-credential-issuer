@@ -37,9 +37,17 @@ export default defineComponent({
       await veridaClient.logout();
       this.$router.push({ name: "Connect" });
     },
+    setName() {
+      this.profile = veridaClient.profile?.name?.split("")[0] || "";
+    },
   },
   mounted() {
-    this.profile = veridaClient.profile?.name?.split("")[0] || "";
+    this.setName();
+  },
+  created() {
+    veridaClient.on("profileChanged", () => {
+      this.setName();
+    });
   },
 });
 </script>
