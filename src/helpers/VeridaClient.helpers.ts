@@ -12,7 +12,7 @@ const {
 } = process.env;
 
 class VeridaClient extends EventEmitter {
-  private connection: any;
+  private context: any;
   private profileInstance: any;
   private account: any;
   public did?: string;
@@ -22,13 +22,13 @@ class VeridaClient extends EventEmitter {
    * Public method for initializing this app
    */
   async initApp(): Promise<void> {
-    if (!this.connection) {
+    if (!this.context) {
       await this.connectVault();
     }
   }
 
   appInitialized(): boolean {
-    if (this.connection?.client?.did) {
+    if (this.context?.client?.did) {
       return true;
     }
     return false;
@@ -52,7 +52,7 @@ class VeridaClient extends EventEmitter {
       },
     });
 
-    this.connection = await Network.connect({
+    this.context = await Network.connect({
       client: {
         ceramicUrl: VUE_APP_CERAMIC_URL,
       },
@@ -65,33 +65,29 @@ class VeridaClient extends EventEmitter {
     this.did = await this.account.did();
     await this.initProfile();
 
-    console.log(this.connection);
-
     this.emit("initialized");
   }
 
   private async initProfile(): Promise<void> {
-    const services = this;
-    const client = this.connection.getClient();
-    this.profileInstance = await client.openPublicProfile(
-      this.did,
-      "Verida: Vault"
-    );
-
-    const cb = async function (): Promise<void> {
-      const data = await services.profileInstance.getMany();
-      services.profile = data.reduce(
-        (result: any, item: IProfileDocument): IProfileDetails => {
-          result[item.key] = item.value;
-          return result;
-        },
-        {}
-      );
-      services.emit("profileChanged", services.profile);
-    };
-
-    this.profileInstance.listen(cb);
-    await cb();
+    try {
+      const client = await this.context.getClient();
+      const profile = await client.openPublicProfile(this.did, "Verida: Vault");
+      const cb = async () => {
+        const data = await profile.getMany();
+        this.profile = data.reduce(
+          (result: any, item: IProfileDocument): IProfileDetails => {
+            result[item.key] = item.value;
+            return result;
+          },
+          {}
+        );
+        this.emit("profileChanged", this.profile);
+      };
+      profile.listen(cb);
+      await cb();
+    } catch (error) {
+      console.log("User", { error });
+    }
   }
 
   public async sendMessage(messageData: ICredentials): Promise<boolean> {
@@ -103,14 +99,14 @@ class VeridaClient extends EventEmitter {
     const config = {
       recipientContextName: "Verida: Vault",
     };
-    const messaging = await this.connection.getMessaging();
+    const messaging = await this.context.getMessaging();
     await messaging.send(this.did, type, data, message, config);
     return true;
   }
 
   async logout(): Promise<void> {
     await this.account.disconnect();
-    this.connection = null;
+    this.context = null;
     this.profileInstance = null;
     this.account = null;
     this.did = "";
