@@ -99,6 +99,7 @@ class VeridaClient extends EventEmitter {
     const config = {
       recipientContextName: "Verida: Vault",
     };
+
     const messaging = await this.context.getMessaging();
     await messaging.send(this.did, type, data, message, config);
     return true;
