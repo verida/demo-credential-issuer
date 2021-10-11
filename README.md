@@ -7,7 +7,7 @@ Available at https://mapay.demos.testnet.verida.io
 # Build
 
 ```
-use nvm
+nvm use
 npm install
 npm run build
 ```
@@ -15,7 +15,7 @@ npm run build
 # Testing
 
 ```
-use nvm
+nvm use
 npm install 
 npm run serve
 ```
