@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@verida/account-web-vault": "^1.0.5",
-    "@verida/client-ts": "^1.0.7",
+    "@verida/client-ts": "^1.0.8",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",

@@ -153,11 +153,11 @@ export default defineComponent({
           regExpDate: this.regExpDate,
           schema: `${window.location.href}schema.json`,
         };
-        console.log(formValues);
-
         await veridaClient.sendMessage(formValues);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
+        console.log(error);
+
         this.$toast.error("Something went wrong  ");
       } finally {
         this.isSubmitting = false;
