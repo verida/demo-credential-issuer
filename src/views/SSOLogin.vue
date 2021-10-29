@@ -25,15 +25,21 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers/";
 
+type TData = {
+  error: unknown;
+  isLoading: boolean;
+};
+
 export default defineComponent({
   name: "Connect",
   props: {},
   components: {
     PulseLoader,
   },
-  data() {
+  data(): TData {
     return {
       isLoading: false,
+      error: null,
     };
   },
   methods: {
@@ -43,22 +49,16 @@ export default defineComponent({
         await veridaClient.connectVault();
         this.$router.push({ name: "Home" });
       } catch (error) {
-        console.log(error);
+        this.error = error;
       } finally {
-        this.isLoading = false;
-      }
-    },
-    onClose(event: any) {
-      if (
-        event.target.id === "verida-modal" ||
-        event.target.id === "verida-modal-close"
-      ) {
         this.isLoading = false;
       }
     },
   },
   created() {
-    window.addEventListener("click", this.onClose);
+    veridaClient.on("authenticationCancelled", () => {
+      this.isLoading = false;
+    });
   },
 });
 </script>

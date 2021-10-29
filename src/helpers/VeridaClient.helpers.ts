@@ -1,4 +1,4 @@
-import { Network } from "@verida/client-ts";
+import { EnvironmentType, Network } from "@verida/client-ts";
 import { VaultAccount } from "@verida/account-web-vault";
 import { ICredentials, IProfileDetails, IProfileDocument } from "@/interfaces";
 
@@ -6,21 +6,18 @@ import { EventEmitter } from "events";
 
 const {
   VUE_APP_LOGO_URL,
-  VUE_APP_CERAMIC_URL,
   VUE_APP_CONTEXT_NAME,
   VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
 } = process.env;
 
+export const VERIDA_ENVIRONMENT = EnvironmentType.TESTNET;
+
 class VeridaClient extends EventEmitter {
   private context: any;
-  private profileInstance: any;
   private account: any;
   public did?: string;
   public profile = {};
 
-  /**
-   * Public method for initializing this app
-   */
   async initApp(): Promise<void> {
     if (!this.context) {
       await this.connectVault();
@@ -34,9 +31,6 @@ class VeridaClient extends EventEmitter {
     return false;
   }
 
-  /**
-   * Private method for connecting to the vault
-   */
   public async connectVault(): Promise<void> {
     this.account = new VaultAccount({
       defaultDatabaseServer: {
@@ -48,13 +42,13 @@ class VeridaClient extends EventEmitter {
         endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
       },
       vaultConfig: {
-        logoUrl: VUE_APP_LOGO_URL,
+        loginUri: VUE_APP_LOGO_URL,
       },
     });
 
     this.context = await Network.connect({
       client: {
-        ceramicUrl: VUE_APP_CERAMIC_URL,
+        environment: VERIDA_ENVIRONMENT,
       },
       account: this.account,
       context: {
@@ -106,12 +100,10 @@ class VeridaClient extends EventEmitter {
   }
 
   async logout(): Promise<void> {
-    await this.account.disconnect();
+    await this.context.getAccount().disconnect(VUE_APP_CONTEXT_NAME);
     this.context = null;
-    this.profileInstance = null;
     this.account = null;
     this.did = "";
-
     this.profile = {};
   }
 }
