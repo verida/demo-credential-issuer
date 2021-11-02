@@ -11,6 +11,7 @@
             <input
               required
               type="text"
+              :disabled="isSubmitting"
               name="did-number"
               v-model="did"
               id="did-number"
@@ -53,6 +54,7 @@
               v-model="firstName"
               name="first-name"
               id="first-name"
+              :disabled="isSubmitting"
               placeholder="e.g John"
             />
           </div>
@@ -63,6 +65,7 @@
               type="text"
               v-model="lastName"
               name="last-name"
+              :disabled="isSubmitting"
               id="last-name"
               placeholder="e.g Smith"
             />
@@ -74,6 +77,7 @@
               type="text"
               v-model="regNumber"
               name="reg-number"
+              :disabled="isSubmitting"
               id="reg-number"
               placeholder="e.g BAC12920"
             />
@@ -86,6 +90,7 @@
               v-model="regExpDate"
               name="reg-exp-date"
               id="reg-exp-date"
+              :disabled="isSubmitting"
               placeholder="dd/mm/yy"
             />
           </div>
