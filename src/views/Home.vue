@@ -11,10 +11,11 @@
             <input
               required
               type="text"
+              :disabled="isSubmitting"
               name="did-number"
               v-model="did"
               id="did-number"
-              placeholder="did:3:kjzl6cwe1jw14bhl9z1oxgkoy8dpbd20vv7otvr14g6i5xwotn9dnll3zpdfu4s"
+              placeholder="e.g (did:vda:...)"
             />
           </div>
           <div class="form-block">
@@ -53,6 +54,7 @@
               v-model="firstName"
               name="first-name"
               id="first-name"
+              :disabled="isSubmitting"
               placeholder="e.g John"
             />
           </div>
@@ -63,6 +65,7 @@
               type="text"
               v-model="lastName"
               name="last-name"
+              :disabled="isSubmitting"
               id="last-name"
               placeholder="e.g Smith"
             />
@@ -74,6 +77,7 @@
               type="text"
               v-model="regNumber"
               name="reg-number"
+              :disabled="isSubmitting"
               id="reg-number"
               placeholder="e.g BAC12920"
             />
@@ -86,6 +90,7 @@
               v-model="regExpDate"
               name="reg-exp-date"
               id="reg-exp-date"
+              :disabled="isSubmitting"
               placeholder="dd/mm/yy"
             />
           </div>
@@ -107,6 +112,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
+import { MAPAY_SCHEMA } from "@/constant";
 import AppHeader from "@/components/Header.vue";
 
 export default defineComponent({
@@ -151,13 +157,12 @@ export default defineComponent({
           regNumber: this.regNumber,
           healthType: this.healthSelectType,
           regExpDate: this.regExpDate,
-          schema: `${window.location.href}schema.json`,
+          schema: MAPAY_SCHEMA,
         };
+
         await veridaClient.sendMessage(formValues);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
-        console.log(error);
-
         this.$toast.error("Something went wrong  ");
       } finally {
         this.isSubmitting = false;
