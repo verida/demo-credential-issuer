@@ -68,13 +68,10 @@ class VeridaClient extends EventEmitter {
       const profile = await client.openPublicProfile(this.did, "Verida: Vault");
       const cb = async () => {
         const data = await profile.getMany();
-        this.profile = data.reduce(
-          (result: any, item: IProfileDocument): IProfileDetails => {
-            result[item.key] = item.value;
-            return result;
-          },
-          {}
-        );
+        this.profile = {
+          name: data.name,
+          country: data.country,
+        };
         this.emit("profileChanged", this.profile);
       };
       profile.listen(cb);
