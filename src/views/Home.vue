@@ -159,6 +159,7 @@ export default defineComponent({
           regExpDate: this.regExpDate,
           schema: MAPAY_SCHEMA,
         };
+
         await veridaClient.sendMessage(formValues);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
