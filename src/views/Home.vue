@@ -71,7 +71,7 @@
             />
           </div>
           <div class="form-block">
-            <label for="reg-number">Regsitration Number</label>
+            <label for="reg-number">Registration Number</label>
             <input
               required
               type="text"
@@ -83,7 +83,7 @@
             />
           </div>
           <div class="form-block">
-            <label for="reg-exp-date">Regsitration expiring date</label>
+            <label for="reg-exp-date">Registration expiring date</label>
             <input
               required
               type="date"

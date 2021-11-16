@@ -1,6 +1,7 @@
 
 name: build-app
-on: [push]
+on:
+  [push, pull_request]
 jobs:
   build-app:
     runs-on: ubuntu-latest
