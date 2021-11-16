@@ -1,6 +1,6 @@
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { VaultAccount } from "@verida/account-web-vault";
-import { ICredentials, IProfileDetails, IProfileDocument } from "@/interfaces";
+import { ICredentials } from "@/interfaces";
 
 import { EventEmitter } from "events";
 
@@ -92,7 +92,7 @@ class VeridaClient extends EventEmitter {
     };
 
     const messaging = await this.context.getMessaging();
-    await messaging.send(this.did, type, data, message, config);
+    await messaging.send(messageData.did, type, data, message, config);
     return true;
   }
 

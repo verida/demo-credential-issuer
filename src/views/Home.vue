@@ -122,7 +122,7 @@ export default defineComponent({
   },
   data() {
     return {
-      did: veridaClient.did || "",
+      did: veridaClient?.did || "",
       firstName: "",
       lastName: "",
       regNumber: "",
