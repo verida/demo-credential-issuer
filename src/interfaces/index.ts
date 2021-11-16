@@ -1,5 +1,1 @@
-export type {
-  IProfileDetails,
-  IProfileDocument,
-  ICredentials,
-} from "./veridaClient.interfaces";
+export type { ICredentials } from "./veridaClient.interfaces";

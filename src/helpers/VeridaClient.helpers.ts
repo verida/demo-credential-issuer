@@ -1,6 +1,6 @@
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { VaultAccount } from "@verida/account-web-vault";
-import { ICredentials, IProfileDetails, IProfileDocument } from "@/interfaces";
+import { ICredentials } from "@/interfaces";
 
 import { EventEmitter } from "events";
 
