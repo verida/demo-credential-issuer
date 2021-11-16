@@ -6,7 +6,7 @@
         @click="toggleDropdown"
         :class="['m-dropdown-top', isOpened && 'show']"
       >
-        <h4>{{ profile }}</h4>
+        <img height="20" :src="avatar" alt="avatar" />
       </div>
       <div v-show="isOpened" class="m-dropdown-logout">
         <button @click="onLogout">Log out</button>
@@ -25,7 +25,7 @@ export default defineComponent({
     return {
       isOpened: false,
       did: veridaClient.did,
-      profile: "",
+      avatar: "",
     };
   },
   methods: {
@@ -37,16 +37,13 @@ export default defineComponent({
       await veridaClient.logout();
       this.$router.push({ name: "Connect" });
     },
-    setName() {
-      this.profile = veridaClient.profile?.name?.split("")[0] || "";
+    setProfile() {
+      this.avatar = veridaClient.profile.avatar;
     },
-  },
-  mounted() {
-    this.setName();
   },
   created() {
     veridaClient.on("profileChanged", () => {
-      this.setName();
+      this.setProfile();
     });
   },
 });
@@ -74,6 +71,11 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    img {
+      border-radius: 50%;
+      height: 2.5rem;
+      width: 2.5rem;
+    }
     &.show {
       border: 1px #2c558b solid;
     }
