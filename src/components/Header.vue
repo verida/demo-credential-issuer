@@ -41,6 +41,9 @@ export default defineComponent({
       this.avatar = veridaClient.profile.avatar;
     },
   },
+  mounted() {
+    this.setProfile();
+  },
   created() {
     veridaClient.on("profileChanged", () => {
       this.setProfile();
