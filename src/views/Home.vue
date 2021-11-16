@@ -122,7 +122,7 @@ export default defineComponent({
   },
   data() {
     return {
-      did: "",
+      did: veridaClient?.did || "",
       firstName: "",
       lastName: "",
       regNumber: "",
@@ -159,9 +159,6 @@ export default defineComponent({
           regExpDate: this.regExpDate,
           schema: MAPAY_SCHEMA,
         };
-
-        console.log(formValues);
-
         await veridaClient.sendMessage(formValues);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
