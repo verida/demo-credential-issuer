@@ -1,8 +1,11 @@
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { VaultAccount } from "@verida/account-web-vault";
-import { ICredentials } from "@/interfaces";
 
 import { EventEmitter } from "events";
+import {
+  ICredentials,
+  IProfileDetails,
+} from "@/interfaces/veridaClient.interfaces";
 
 const {
   VUE_APP_LOGO_URL,
@@ -16,7 +19,7 @@ class VeridaClient extends EventEmitter {
   private context: any;
   private account: any;
   public did?: string;
-  public profile = {};
+  public profile?: IProfileDetails;
 
   async initApp(): Promise<void> {
     if (!this.context) {
@@ -71,6 +74,7 @@ class VeridaClient extends EventEmitter {
         this.profile = {
           name: data.name,
           country: data.country,
+          avatar: data?.avatar?.uri,
         };
         this.emit("profileChanged", this.profile);
       };
@@ -101,7 +105,11 @@ class VeridaClient extends EventEmitter {
     this.context = null;
     this.account = null;
     this.did = "";
-    this.profile = {};
+    this.profile = {
+      name: "",
+      avatar: "",
+      country: "",
+    };
   }
 }
 
