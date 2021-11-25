@@ -87,10 +87,20 @@ class VeridaClient extends EventEmitter {
 
   public async sendMessage(messageData: ICredentials): Promise<boolean> {
     const type = "inbox/type/dataSend";
+    const contextName = VUE_APP_CONTEXT_NAME;
+    const jwtDID = await this.context
+      .getAccount()
+      .createDidJwt(contextName, messageData);
+
     const data = {
-      data: [messageData],
+      data: [
+        {
+          ...messageData,
+          didJwtVc: jwtDID,
+        },
+      ],
     };
-    const message = "New Message: New Credential";
+    const message = "Mapay Credential";
     const config = {
       recipientContextName: "Verida: Vault",
     };

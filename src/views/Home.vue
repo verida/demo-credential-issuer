@@ -157,8 +157,6 @@ export default defineComponent({
           regNumber: this.regNumber,
           healthType: this.healthSelectType,
           regExpDate: this.regExpDate,
-          //@todo DID JWT representation of this credential
-          didJwtVc: "Mapay Crendential",
           schema: MAPAY_SCHEMA,
         };
 
