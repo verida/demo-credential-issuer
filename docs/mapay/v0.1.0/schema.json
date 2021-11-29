@@ -1,0 +1,83 @@
+
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verida.github.io/mapay/v0.1.0/schema.json",
+  "name": "MAPay Credentials ",
+  "title": "MAPay Credentials ",
+  "titlePlural": "MAPay Credentials ",
+  "description": "MAPay Credentials Issuer",
+  "type": "object",
+  "database": {
+    "name": "credential",
+    "indexes": {
+      "firstName": [
+        "firstName"
+      ],
+      "lstName": [
+        "lastName"
+      ],
+      "insertedAt": [
+        "insertedAt"
+      ]
+    }
+  },
+  "appearance": {
+    "style": {
+      "color": "#FF886E",
+      "icon": "./mapay_logo.png"
+    }
+  },
+  "layouts": {
+    "create": [
+      "firstName",
+      "lastName",
+      "regNumber",
+      "testTimestamp"
+    ],
+    "view": [
+      "firstName",
+      "lastName",
+      "regNumber",
+      "testTimestamp"
+    ]
+  },
+  "allOf": [
+    {
+      "$ref": "https://core.schemas.verida.io/base/v0.1.0/schema.json"
+    },
+    {
+      "$ref": "https://common.schemas.verida.io/credential/base/v0.1.0/schema.json"
+    },
+    {
+      "properties": {
+        "firstName": {
+          "title": "First Name",
+          "type": "string"
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string"
+        },
+        "regNumber": {
+          "title": "Registration Number",
+          "type": "string"
+        },
+        "healthType": {
+          "title": "Health professional type",
+          "type": "string"
+        },
+        "testTimestamp": {
+            "title": "Test timestamp",
+            "type": "string",
+            "format": "date-time"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "regNumber",
+        "healthType"
+      ]
+    }
+  ]
+}
