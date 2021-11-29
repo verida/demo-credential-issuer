@@ -182,8 +182,6 @@ export default defineComponent({
 
       this.isSubmitting = true;
 
-      console.log(formValues);
-
       try {
         await veridaClient.sendMessage(formValues, this.did);
         this.$toast.success("Credentials Sent Succesfully");
