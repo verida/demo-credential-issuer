@@ -27,10 +27,10 @@
               <div class="dropdown-value" @click="toggleSelect">
                 <span
                   :class="[
-                    healthSelectType !== 'Not Selected' &&
+                    healthSelectedType !== 'Not Selected' &&
                       'dropdown-value-text',
                   ]"
-                  >{{ healthSelectType }}</span
+                  >{{ healthSelectedType }}</span
                 >
                 <img
                   src="../assets/images/arrow_up.png"
@@ -94,7 +94,21 @@
               placeholder="dd/mm/yy"
             />
           </div>
+          <div class="form-block span-grid">
+            <label for="summary">Summary (optional)</label>
+            <textarea
+              required
+              v-model="summary"
+              name="summary"
+              id="summary"
+              rows="50"
+              cols="100"
+              :disabled="isSubmitting"
+              placeholder="Credential Description"
+            />
+          </div>
         </div>
+
         <div class="submit-btn">
           <button
             :class="['btn-default', isSubmitting && 'loading']"
@@ -114,6 +128,7 @@ import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
 import { MAPAY_SCHEMA } from "@/constant";
 import AppHeader from "@/components/Header.vue";
+import { ICredentials } from "@/interfaces/veridaClient.interfaces";
 
 export default defineComponent({
   name: "Home",
@@ -127,6 +142,7 @@ export default defineComponent({
       lastName: "",
       regNumber: "",
       regExpDate: "",
+      summary: "",
       healthTypes: [
         "Dentist",
         "Psychologist",
@@ -134,7 +150,7 @@ export default defineComponent({
         "Pharmacist",
         "Allied Health Professional",
       ],
-      healthSelectType: "Not Selected",
+      healthSelectedType: "Not Selected",
       selectOptions: false,
       isSubmitting: false,
       validationError: false,
@@ -143,26 +159,33 @@ export default defineComponent({
   methods: {
     async onSubmit() {
       this.validationError = false;
-      if (this.healthSelectType === "Not Selected") {
+      const formValues: ICredentials = {
+        name: this.healthSelectedType,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        regNumber: this.regNumber,
+        healthType: this.healthSelectedType,
+        regExpDate: this.regExpDate,
+
+        //@todo DID JWT representation of this credential
+        didJwtVc: "Mapay Crendential",
+        testTimestamp: new Date().toISOString(),
+        schema: MAPAY_SCHEMA,
+      };
+      if (this.summary) {
+        formValues.summary = this.summary;
+      }
+      if (this.healthSelectedType === "Not Selected") {
         this.validationError = true;
         return;
       }
+
       this.isSubmitting = true;
 
-      try {
-        const formValues = {
-          did: this.did,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          regNumber: this.regNumber,
-          healthType: this.healthSelectType,
-          regExpDate: this.regExpDate,
-          //@todo DID JWT representation of this credential
-          didJwtVc: "Mapay Crendential",
-          schema: MAPAY_SCHEMA,
-        };
+      console.log(formValues);
 
-        await veridaClient.sendMessage(formValues);
+      try {
+        await veridaClient.sendMessage(formValues, this.did);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
         this.$toast.error("Something went wrong  ");
@@ -175,7 +198,7 @@ export default defineComponent({
     },
 
     selectType(value: string) {
-      this.healthSelectType = value;
+      this.healthSelectedType = value;
       this.selectOptions = false;
     },
   },
@@ -191,6 +214,10 @@ export default defineComponent({
   line-height: 150%;
   font-family: Nunito Sans;
   color: rgba(4, 17, 51, 0.3);
+}
+
+.span-grid {
+  grid-column: 1 / 3;
 }
 
 .credential-form {
@@ -298,11 +325,17 @@ form {
   .form-block {
     text-align: left;
     margin: 0.8rem 1.2rem;
+
     label {
       display: block;
       margin-bottom: 0.125rem;
     }
-    input {
+    textarea {
+      width: 100% !important;
+      height: 10rem !important;
+    }
+    input,
+    textarea {
       width: 20.5rem;
       height: 3rem;
       background: #ffffff;

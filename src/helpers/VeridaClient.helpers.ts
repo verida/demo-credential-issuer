@@ -85,18 +85,21 @@ class VeridaClient extends EventEmitter {
     }
   }
 
-  public async sendMessage(messageData: ICredentials): Promise<boolean> {
+  public async sendMessage(
+    messageData: ICredentials,
+    did: string
+  ): Promise<boolean> {
     const type = "inbox/type/dataSend";
     const data = {
       data: [messageData],
     };
-    const message = "New Message: New Credential";
+    const messageTitle = messageData.healthType;
     const config = {
       recipientContextName: "Verida: Vault",
     };
 
     const messaging = await this.context.getMessaging();
-    await messaging.send(messageData.did, type, data, message, config);
+    await messaging.send(did, type, data, messageTitle, config);
     return true;
   }
 

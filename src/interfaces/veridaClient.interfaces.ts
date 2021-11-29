@@ -12,10 +12,14 @@ export interface IProfileDetails {
 }
 
 export interface ICredentials {
-  did: string;
+  name: string;
   firstName: string;
   lastName: string;
   regNumber: string;
   healthType: string;
-  regExpDate: string;
+  regExpDate?: string;
+  summary?: string;
+  testTimestamp: string;
+  didJwtVc: string;
+  schema: string;
 }
