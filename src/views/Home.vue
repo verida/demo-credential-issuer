@@ -147,22 +147,42 @@ export default defineComponent({
         this.validationError = true;
         return;
       }
+
+      const issueDate = new Date()
+
+      const formValues = {
+        name: "Your " + this.healthSelectType + " Credential",
+        firstName: this.firstName,
+        lastName: this.lastName,
+        regNumber: this.regNumber,
+        healthType: this.healthSelectType,
+        regExpDate: this.regExpDate,
+        schema: MAPAY_SCHEMA,
+        testTimestamp: issueDate.toISOString(),
+        summary: "Credential issued at " + issueDate.toDateString(),
+      };
+
+      const didJwtVc = await veridaClient.createDIDJWT(formValues);
+
+      const data = {
+        ...formValues,
+        didJwtVc,
+      };
+
+      const { isValid, errors } = await veridaClient.validateSchema(
+        data,
+        MAPAY_SCHEMA
+      );
+
+      if (!isValid) {
+        this.$toast.error(errors[0]?.message);
+        return;
+      }
+
       this.isSubmitting = true;
 
       try {
-        const formValues = {
-          did: this.did,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          regNumber: this.regNumber,
-          healthType: this.healthSelectType,
-          regExpDate: this.regExpDate,
-          //@todo DID JWT representation of this credential
-          didJwtVc: "Mapay Crendential",
-          schema: MAPAY_SCHEMA,
-        };
-
-        await veridaClient.sendMessage(formValues);
+        await veridaClient.sendMessage(data, this.did);
         this.$toast.success("Credentials Sent Succesfully");
       } catch (error) {
         this.$toast.error("Something went wrong  ");

@@ -5,6 +5,7 @@ import { EventEmitter } from "events";
 import {
   ICredentials,
   IProfileDetails,
+  SchemaError,
 } from "@/interfaces/veridaClient.interfaces";
 
 const {
@@ -85,18 +86,52 @@ class VeridaClient extends EventEmitter {
     }
   }
 
-  public async sendMessage(messageData: ICredentials): Promise<boolean> {
+  async createDIDJWT(data: ICredentials): Promise<string> {
+    const contextName = VUE_APP_CONTEXT_NAME;
+    const jwtDID = await this.context
+      .getAccount()
+      .createDidJwt(contextName, data);
+
+    return jwtDID;
+  }
+
+  async validateSchema(
+    data: ICredentials,
+    schemaUrl: string
+  ): Promise<SchemaError> {
+    const schemas = await this.context.getClient().getSchema(schemaUrl);
+    const isValid = await schemas.validate(data);
+    const errors = schemas.errors;
+
+    if (!isValid) {
+      return {
+        isValid,
+        errors,
+      };
+    }
+
+    return {
+      isValid,
+      errors: [],
+    };
+  }
+
+  public async sendMessage(
+    messageData: ICredentials,
+    did: string
+  ): Promise<boolean> {
     const type = "inbox/type/dataSend";
+
     const data = {
       data: [messageData],
     };
-    const message = "New Message: New Credential";
     const config = {
       recipientContextName: "Verida: Vault",
     };
 
     const messaging = await this.context.getMessaging();
-    await messaging.send(messageData.did, type, data, message, config);
+    const subject = "New " + messageData.healthType + " Credential"
+    await messaging.send(did, type, data, subject, config);
     return true;
   }
 
