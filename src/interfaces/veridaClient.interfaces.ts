@@ -11,11 +11,17 @@ export interface IProfileDetails {
   avatar: string;
 }
 
+export interface SchemaError {
+  isValid: boolean;
+  errors: any[];
+}
+
 export interface ICredentials {
-  did: string;
   firstName: string;
   lastName: string;
   regNumber: string;
   healthType: string;
   regExpDate: string;
+  name: string;
+  summary?: string;
 }
