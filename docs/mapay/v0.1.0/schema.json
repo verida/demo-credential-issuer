@@ -32,13 +32,15 @@
       "firstName",
       "lastName",
       "regNumber",
-      "testTimestamp"
+      "testTimestamp",
+      "regExpDate"
     ],
     "view": [
       "firstName",
       "lastName",
       "regNumber",
-      "testTimestamp"
+      "testTimestamp",
+      "regExpDate"
     ]
   },
   "allOf": [
@@ -70,12 +72,19 @@
             "title": "Test timestamp",
             "type": "string",
             "format": "date-time"
+        },
+        "regExpDate": {
+            "title": "Registration Expiration Date",
+            "type": "string",
+            "format": "date",
+            "description": "YYYY-MM-DD"
         }
       },
       "required": [
         "firstName",
         "lastName",
         "regNumber",
+        "regExpDate",
         "healthType"
       ]
     }
