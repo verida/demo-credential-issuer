@@ -1,7 +1,7 @@
 
 {
 "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://verida.github.io/mapay/v0.1.0/schema.json",
+  "$id": "https://verida.github.io/demo-credential-issuer/mapay/v0.1.0/schema.json",
   "name": "MAPay Credentials ",
   "title": "MAPay Credentials ",
   "titlePlural": "MAPay Credentials ",
