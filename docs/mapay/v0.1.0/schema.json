@@ -40,7 +40,8 @@
       "lastName",
       "regNumber",
       "testTimestamp",
-      "regExpDate"
+      "regExpDate",
+      "healthType"
     ]
   },
   "allOf": [
