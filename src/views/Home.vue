@@ -148,16 +148,18 @@ export default defineComponent({
         return;
       }
 
+      const issueDate = new Date()
+
       const formValues = {
-        name: this.healthSelectType,
+        name: "Your " + this.healthSelectType + " Credential",
         firstName: this.firstName,
         lastName: this.lastName,
         regNumber: this.regNumber,
         healthType: this.healthSelectType,
         regExpDate: this.regExpDate,
         schema: MAPAY_SCHEMA,
-        testTimestamp: new Date().toISOString(),
-        summary: "You have a new health credential",
+        testTimestamp: issueDate.toISOString(),
+        summary: "Credential issued at " + issueDate.toDateString(),
       };
 
       const didJwtVc = await veridaClient.createDIDJWT(formValues);

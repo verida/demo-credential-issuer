@@ -130,7 +130,8 @@ class VeridaClient extends EventEmitter {
     };
 
     const messaging = await this.context.getMessaging();
-    await messaging.send(did, type, data, messageData.name, config);
+    const subject = "New " + messageData.healthType + " Credential"
+    await messaging.send(did, type, data, subject, config);
     return true;
   }
 
