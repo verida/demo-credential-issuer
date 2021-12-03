@@ -46,7 +46,7 @@ class VeridaClient extends EventEmitter {
         endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
       },
       vaultConfig: {
-        loginUri: VUE_APP_LOGO_URL,
+        logoUrl: VUE_APP_LOGO_URL,
       },
     });
 
@@ -130,7 +130,7 @@ class VeridaClient extends EventEmitter {
     };
 
     const messaging = await this.context.getMessaging();
-    const subject = "New " + messageData.healthType + " Credential"
+    const subject = "New " + messageData.healthType + " Credential";
     await messaging.send(did, type, data, subject, config);
     return true;
   }
