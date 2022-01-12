@@ -8,6 +8,7 @@ import {
 	SchemaError,
 } from '@/interfaces/veridaClient.interfaces';
 
+
 const {
 	VUE_APP_LOGO_URL,
 	VUE_APP_CONTEXT_NAME,
@@ -29,7 +30,7 @@ class VeridaClient extends EventEmitter {
 	}
 
 	appInitialized(): boolean {
-		if (this.context?.client?.did) {
+		if (this.did) {
 			return true;
 		}
 		return false;
@@ -39,17 +40,18 @@ class VeridaClient extends EventEmitter {
 		this.account = new VaultAccount({
 			defaultDatabaseServer: {
 				type: 'VeridaDatabase',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
+				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
 			},
 			defaultMessageServer: {
 				type: 'VeridaMessage',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
+				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
 			},
 			vaultConfig: {
 				request: {
 					logoUrl: VUE_APP_LOGO_URL,
 				},
 			},
+
 		});
 
 		this.context = await Network.connect({
@@ -58,12 +60,15 @@ class VeridaClient extends EventEmitter {
 			},
 			account: this.account,
 			context: {
-				name: VUE_APP_CONTEXT_NAME,
+				name: VUE_APP_CONTEXT_NAME as string,
 			},
+
 		});
 
 		this.did = await this.account.did();
+
 		await this.initProfile();
+
 
 		this.emit('initialized');
 	}
