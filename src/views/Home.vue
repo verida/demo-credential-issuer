@@ -2,7 +2,7 @@
   <app-header />
   <div class="app-section">
     <div class="credential-form">
-      <img src="../assets/images/mapay_logo.png" alt="mapay" />
+      <img src="../assets/images/verida_logo.svg" alt="verida" />
       <h1>Register Licensed Professional</h1>
       <form @submit.prevent="onSubmit">
         <div class="grid-form">
@@ -148,7 +148,7 @@ export default defineComponent({
         return;
       }
 
-      const issueDate = new Date()
+      const issueDate = new Date();
 
       const formValues = {
         name: "Your " + this.healthSelectType + " Credential",

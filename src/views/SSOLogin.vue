@@ -8,7 +8,7 @@
         <pulse-loader :loading="isLoading" />
       </div>
       <img src="../assets/images/verida_logo.svg" alt="verida-btn" />
-      <h3>Connect now</h3>
+      <h3>Verifiable Credentials Demo</h3>
       <p>Use the button below to connect with Verida Vault</p>
       <button @click="connect">
         <img
