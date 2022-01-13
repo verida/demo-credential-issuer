@@ -46,6 +46,10 @@ class VeridaClient extends EventEmitter {
 				type: 'VeridaMessage',
 				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
 			},
+			defaultNotificationServer: {
+				type: 'VeridaNotification',
+				endpointUri: 'https://vpns.testnet.verida.io:5011'
+			},
 			vaultConfig: {
 				request: {
 					logoUrl: VUE_APP_LOGO_URL,
