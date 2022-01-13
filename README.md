@@ -4,22 +4,42 @@ A demonstration app showing how credentials are issued and sent to a person
 
 Available at https://mapay.demos.testnet.verida.io
 
-# Build
+## Install
 
 ```
-nvm use
+yarn install
+```
+
+or
+
+```
 npm install
+```
+
+## Build
+
+```
+yarn build
+```
+
+or
+
+```
 npm run build
 ```
 
-# Testing
+## Run
 
 ```
-nvm use
-npm install 
+yarn serve
+```
+
+or
+
+```
 npm run serve
 ```
 
 # Deployment
 
-Deployment is automatically done via [AWS Amplify](https://us-east-2.console.aws.amazon.com/amplify/) for all new commits to the `main` branch. 
+Deployment is automatically done via [AWS Amplify](https://us-east-2.console.aws.amazon.com/amplify/) for all new commits to the `main` branch.
