@@ -38,7 +38,9 @@ export default defineComponent({
       this.$router.push({ name: "Connect" });
     },
     setProfile() {
-      this.avatar = veridaClient.profile.avatar;
+      if (veridaClient?.profile?.avatar) {
+        this.avatar = veridaClient.profile.avatar;
+      }
     },
   },
   mounted() {
