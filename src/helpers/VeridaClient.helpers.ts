@@ -13,6 +13,7 @@ const {
 	VUE_APP_LOGO_URL,
 	VUE_APP_CONTEXT_NAME,
 	VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
+	VUE_APP_VERIDA_TESTNET_DEFAULT_NOTIFICATION_SERVER
 } = process.env;
 
 export const VERIDA_ENVIRONMENT = EnvironmentType.TESTNET;
@@ -48,14 +49,13 @@ class VeridaClient extends EventEmitter {
 			},
 			defaultNotificationServer: {
 				type: 'VeridaNotification',
-				endpointUri: 'https://vpns.testnet.verida.io:5011'
+				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_NOTIFICATION_SERVER
 			},
 			vaultConfig: {
 				request: {
 					logoUrl: VUE_APP_LOGO_URL,
 				},
 			},
-
 		});
 
 		this.context = await Network.connect({
