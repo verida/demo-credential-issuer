@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Credential from "../views/Home.vue";
-import { veridaClient } from "@/helpers/";
+import store from "store";
+import { CONTEXT_NAME } from "@/constant";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,7 +27,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (veridaClient.did) {
+    const profileFromStore = store.get(CONTEXT_NAME);
+    if (profileFromStore) {
       next();
     } else {
       next("/connect");

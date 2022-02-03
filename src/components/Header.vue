@@ -1,23 +1,14 @@
 <template>
   <header class="header">
     <div></div>
-    <div v-show="did" class="m-dropdown">
-      <div
-        @click="toggleDropdown"
-        :class="['m-dropdown-top', isOpened && 'show']"
-      >
-        <img height="20" :src="avatar" alt="avatar" />
-      </div>
-      <div v-show="isOpened" class="m-dropdown-logout">
-        <button @click="onLogout">Log out</button>
-      </div>
-    </div>
+    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
   </header>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
+import { CONTEXT_NAME, LOGO } from "@/constant";
 
 export default defineComponent({
   name: "Header",
@@ -26,6 +17,8 @@ export default defineComponent({
       isOpened: false,
       did: veridaClient.did,
       avatar: "",
+      contextName: CONTEXT_NAME,
+      logo: LOGO,
     };
   },
   methods: {

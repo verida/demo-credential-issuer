@@ -13,7 +13,9 @@
   "dependencies": {
     "@verida/account-web-vault": "^1.1.7",
     "@verida/client-ts": "^1.1.10",
+    "@verida/vue-account3": "^0.1.1",
     "core-js": "^3.6.5",
+    "store": "^2.0.12",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vue-spinner": "^1.0.4",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
+    "@types/store": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",

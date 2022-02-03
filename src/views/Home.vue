@@ -1,5 +1,6 @@
 <template>
   <app-header />
+
   <div class="app-section">
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />

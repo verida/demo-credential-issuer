@@ -1,5 +1,14 @@
+
 <template>
-  <div class="login-container">
+  <!-- <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" /> -->
+  <vda-login
+    :onError="onError"
+    :onSuccess="onSuccess"
+    :contextName="contextName"
+    :logo="logo"
+    :onLogout="onLogout"
+  />
+  <!-- <div class="login-container">
     <div class="loader" v-if="isLoading">
       <pulse-loader :loading="isLoading" />
     </div>
@@ -17,42 +26,55 @@
         />
       </button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
 import { veridaClient } from "@/helpers/";
-
-type TData = {
-  error: unknown;
-  isLoading: boolean;
-};
+import { CONTEXT_NAME, LOGO } from "@/constant";
 
 export default defineComponent({
   name: "Connect",
   props: {},
   components: {
-    PulseLoader,
+    // PulseLoader,
   },
-  data(): TData {
+  data() {
     return {
       isLoading: false,
       error: null,
+      contextName: CONTEXT_NAME,
+      logo: LOGO,
     };
   },
   methods: {
+    ...mapMutations(["setStatus"]),
     async connect() {
       this.isLoading = true;
       try {
         await veridaClient.connectVault();
         this.$router.push({ name: "Home" });
-      } catch (error) {
+      } catch (error: any) {
         this.error = error;
       } finally {
         this.isLoading = false;
       }
+    },
+    onSuccess(response: any) {
+      //@ts-ignore
+      this.$vdaClient.initUser(response);
+      this.setStatus();
+      this.$router.push({ name: "Home" });
+    },
+    onError(error: Error) {
+      console.log("Login Error", error);
+    },
+    onLogout() {
+      console.log("hello");
     },
   },
   created() {
