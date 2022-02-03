@@ -1,6 +1,5 @@
 
 <template>
-  <!-- <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" /> -->
   <vda-login
     :onError="onError"
     :onSuccess="onSuccess"
@@ -8,30 +7,10 @@
     :logo="logo"
     :onLogout="onLogout"
   />
-  <!-- <div class="login-container">
-    <div class="loader" v-if="isLoading">
-      <pulse-loader :loading="isLoading" />
-    </div>
-    <div class="connect" v-else>
-      <div class="loader" v-if="isLoading">
-        <pulse-loader :loading="isLoading" />
-      </div>
-      <img src="../assets/images/verida_logo.svg" alt="verida-btn" />
-      <h3>Verifiable Credentials Demo</h3>
-      <p>Use the button below to connect with Verida Vault</p>
-      <button @click="connect">
-        <img
-          src="../assets/images/connect_with_verida_btn.png"
-          alt="verida-btn"
-        />
-      </button>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-// import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { veridaClient } from "@/helpers/";
@@ -40,9 +19,7 @@ import { CONTEXT_NAME, LOGO } from "@/constant";
 export default defineComponent({
   name: "Connect",
   props: {},
-  components: {
-    // PulseLoader,
-  },
+  components: {},
   data() {
     return {
       isLoading: false,
