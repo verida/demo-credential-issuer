@@ -6,6 +6,7 @@
     :contextName="contextName"
     :logo="logo"
     :onLogout="onLogout"
+    loginText="Verifiable Credentials Demo"
   />
 </template>
 
