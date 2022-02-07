@@ -1860,10 +1860,10 @@
     "@verida/keyring" "^1.1.2"
     url-parse "^1.5.3"
 
-"@verida/vue-account@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.3.tgz#e6f3bbd56ce96f404a6db24357b2d9c232004440"
-  integrity sha512-trPb6AOfGCo7SvN3MmnZA4j2Qs/BnRYtGNOZEcWDwpnxxLh2jY79fjjN9boQfOpkcgBMAZznAaWSmWXPsmyatw==
+"@verida/vue-account@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.5.tgz#2a6640d446b3ab5ce82b3736628db75f0225a741"
+  integrity sha512-7Zv+FgkrN45/iG4IPh5BopwAPKJis8w1RHn3avVSHh03Qd6fr3TE7hiSsJ7Lpojk7ie+vf18+8f+DVxrqm3upA==
   dependencies:
     "@verida/account-web-vault" "^1.1.7"
     "@verida/client-ts" "^1.1.10"
