@@ -13,7 +13,6 @@ const {
 	VUE_APP_LOGO_URL,
 	VUE_APP_CONTEXT_NAME,
 	VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
-	VUE_APP_VERIDA_TESTNET_DEFAULT_NOTIFICATION_SERVER
 } = process.env;
 
 export const VERIDA_ENVIRONMENT = EnvironmentType.TESTNET;
@@ -39,24 +38,10 @@ class VeridaClient extends EventEmitter {
 
 	public async connectVault(): Promise<void> {
 		this.account = new VaultAccount({
-			defaultDatabaseServer: {
-				type: 'VeridaDatabase',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
-			},
-			defaultMessageServer: {
-				type: 'VeridaMessage',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
-			},
-			defaultNotificationServer: {
-				type: 'VeridaNotification',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_NOTIFICATION_SERVER
-			},
-			vaultConfig: {
-				request: {
-					logoUrl: VUE_APP_LOGO_URL,
-				},
-			},
-		});
+			request: {
+				logoUrl: VUE_APP_LOGO_URL
+			}
+		})
 
 		this.context = await Network.connect({
 			client: {
