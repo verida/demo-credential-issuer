@@ -1,21 +1,19 @@
-
 <template>
   <vda-login
     :onError="onError"
     :onSuccess="onSuccess"
     :contextName="contextName"
     :logo="logo"
-    :onLogout="onLogout"
-    loginText="Verifiable Credentials Demo"
+    :loginText="loginText"
   />
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { defineComponent } from "vue";
-import { mapMutations } from "vuex";
 import { veridaClient } from "@/helpers/";
-import { CONTEXT_NAME, LOGO } from "@/constant";
+
+const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL, VUE_APP_LOGIN_TEXT } =
+  process.env;
 
 export default defineComponent({
   name: "Connect",
@@ -25,40 +23,20 @@ export default defineComponent({
     return {
       isLoading: false,
       error: null,
-      contextName: CONTEXT_NAME,
-      logo: LOGO,
+      contextName: VUE_APP_CONTEXT_NAME,
+      logo: VUE_APP_LOGO_URL,
+      loginText: VUE_APP_LOGIN_TEXT,
     };
   },
   methods: {
-    ...mapMutations(["setStatus"]),
-    async connect() {
-      this.isLoading = true;
-      try {
-        await veridaClient.connectVault();
-        this.$router.push({ name: "Home" });
-      } catch (error: any) {
-        this.error = error;
-      } finally {
-        this.isLoading = false;
-      }
-    },
-    onSuccess(response: any) {
-      //@ts-ignore
-      this.$vdaClient.initUser(response);
-      this.setStatus();
+    async onSuccess(context: any) {
+      await veridaClient.connectVault(context);
+
       this.$router.push({ name: "Home" });
     },
-    onError(error: Error) {
-      console.log("Login Error", error);
+    onError(error: any) {
+      this.error = error;
     },
-    onLogout() {
-      console.log("hello");
-    },
-  },
-  created() {
-    veridaClient.on("authenticationCancelled", () => {
-      this.isLoading = false;
-    });
   },
 });
 </script>

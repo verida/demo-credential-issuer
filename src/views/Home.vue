@@ -112,8 +112,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
-import { MAPAY_SCHEMA } from "@/constant";
+
 import AppHeader from "@/components/Header.vue";
+
+const { VUE_APP_MAPAY_SCHEMA } = process.env;
 
 export default defineComponent({
   name: "Home",
@@ -157,7 +159,7 @@ export default defineComponent({
         regNumber: this.regNumber,
         healthType: this.healthSelectType,
         regExpDate: this.regExpDate,
-        schema: MAPAY_SCHEMA,
+        schema: VUE_APP_MAPAY_SCHEMA,
         testTimestamp: issueDate.toISOString(),
         summary: "Credential issued at " + issueDate.toDateString(),
       };
@@ -171,7 +173,7 @@ export default defineComponent({
 
       const { isValid, errors } = await veridaClient.validateSchema(
         data,
-        MAPAY_SCHEMA
+        VUE_APP_MAPAY_SCHEMA
       );
 
       if (!isValid) {

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Credential from "../views/Home.vue";
-import store from "store";
-import { CONTEXT_NAME } from "@/constant";
+import { routeGuard } from "../helpers/RouteGaurd";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,19 +24,6 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const profileFromStore = store.get(CONTEXT_NAME);
-    if (profileFromStore) {
-      next();
-    } else {
-      next("/connect");
-    }
-  } else {
-    next();
-  }
-});
-
-// router.beforeResolve(RouteGuard);
+router.beforeEach(routeGuard);
 
 export default router;
