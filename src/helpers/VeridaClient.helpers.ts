@@ -1,5 +1,5 @@
 import { EnvironmentType, Network } from '@verida/client-ts';
-import { VaultAccount } from '@verida/account-web-vault';
+import { VaultAccount, VaultAccountConfig } from '@verida/account-web-vault';
 
 import { EventEmitter } from 'events';
 import {
@@ -37,10 +37,11 @@ class VeridaClient extends EventEmitter {
 	}
 
 	public async connectVault(): Promise<void> {
+		// this.account = new VaultAccount(config{
+		// 	logoUrl: VUE_APP_LOGO_URL	
+		// })
 		this.account = new VaultAccount({
-			request: {
-				logoUrl: VUE_APP_LOGO_URL
-			}
+			logoUrl: VUE_APP_LOGO_URL
 		})
 
 		this.context = await Network.connect({
