@@ -33,7 +33,7 @@ export default defineComponent({
       await veridaClient.connectVault(context);
     },
     async onLogout() {
-      await veridaClient.logout();
+      veridaClient.logout();
       this.$router.push({ name: "Connect" });
     },
   },

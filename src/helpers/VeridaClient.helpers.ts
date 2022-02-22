@@ -1,5 +1,3 @@
-import { Context } from "@verida/client-ts";
-import { EventEmitter } from "events";
 import {
   ICredentials,
   SchemaError,
@@ -7,18 +5,17 @@ import {
 
 const { VUE_APP_CONTEXT_NAME } = process.env;
 
-class VeridaClient extends EventEmitter {
+class VeridaClient {
   private context: any;
   public did?: string;
+  public errors?: any;
 
-  public async connectVault(context: Context): Promise<void> {
+  public async connectVault(context: any): Promise<void> {
     this.context = context;
     this.did = await context.getAccount().did();
-
-    console.log(this.did);
   }
 
-  async createDIDJWT(data: ICredentials): Promise<string> {
+  async createDIDJwt(data: ICredentials): Promise<string> {
     const contextName = VUE_APP_CONTEXT_NAME;
     const jwtDID = await this.context
       .getAccount()
@@ -36,16 +33,10 @@ class VeridaClient extends EventEmitter {
     const errors = schemas.errors;
 
     if (!isValid) {
-      return {
-        isValid,
-        errors,
-      };
+      this.errors?.push(errors);
     }
 
-    return {
-      isValid,
-      errors: [],
-    };
+    return isValid;
   }
 
   public async sendMessage(
@@ -67,7 +58,7 @@ class VeridaClient extends EventEmitter {
     return true;
   }
 
-  async logout(): Promise<void> {
+  logout() {
     this.context = null;
   }
 }
