@@ -7,6 +7,7 @@ import {
 	IProfileDetails,
 	SchemaError,
 } from '@/interfaces/veridaClient.interfaces';
+import { Credentials } from '@verida/verifiable-credentials'
 
 
 const {
@@ -37,21 +38,12 @@ class VeridaClient extends EventEmitter {
 	}
 
 	public async connectVault(): Promise<void> {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		this.account = new VaultAccount({
-			defaultDatabaseServer: {
-				type: 'VeridaDatabase',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
+			request: {
+				logoUrl: VUE_APP_LOGO_URL,
 			},
-			defaultMessageServer: {
-				type: 'VeridaMessage',
-				endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER as string,
-			},
-			vaultConfig: {
-				request: {
-					logoUrl: VUE_APP_LOGO_URL,
-				},
-			},
-
 		});
 
 		this.context = await Network.connect({
@@ -94,12 +86,11 @@ class VeridaClient extends EventEmitter {
 	}
 
 	async createDIDJWT(data: ICredentials): Promise<string> {
-		const contextName = VUE_APP_CONTEXT_NAME;
-		const jwtDID = await this.context
-			.getAccount()
-			.createDidJwt(contextName, data);
+		const credential = new Credentials(this.context)
+		const jwtDID: any = await credential.createCredentialJWT(this.did!, data)
+		console.log('jwtDID:', jwtDID)
 
-		return jwtDID;
+		return jwtDID.createdUri;
 	}
 
 	async validateSchema(
