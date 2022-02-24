@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Credential from "../views/Home.vue";
+import SSOLogin from "../views/SSOLogin.vue";
 import { veridaClient } from "@/helpers/";
 
 const routes: Array<RouteRecordRaw> = [
@@ -14,8 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/connect",
     name: "Connect",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/SSOLogin.vue"),
+    component: SSOLogin,
   },
 ];
 
