@@ -1,14 +1,21 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createApp } from "vue";
 import VueToast from "vue-toast-notification";
 import App from "./App.vue";
 import router from "./router";
+import Account from "@verida/vue-account";
 
 import "vue-toast-notification/dist/theme-sugar.css";
 import "./assets/scss/main.scss";
 
-createApp(App)
-  .use(router)
-  .use(VueToast, {
-    position: "top",
-  })
-  .mount("#app");
+const app = createApp(App);
+
+app.use(Account);
+
+app.use(router);
+
+app.use(VueToast, {
+  position: "top",
+});
+
+app.mount("#app");
