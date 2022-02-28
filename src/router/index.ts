@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Credential from "../views/Home.vue";
-import { veridaClient } from "@/helpers/";
+import SSOLogin from "../views/SSOLogin.vue";
+import { routeGuard } from "../helpers/RouteGaurd";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,8 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/connect",
     name: "Connect",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/SSOLogin.vue"),
+    component: SSOLogin,
   },
 ];
 
@@ -24,18 +24,6 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (veridaClient.did) {
-      next();
-    } else {
-      next("/connect");
-    }
-  } else {
-    next();
-  }
-});
-
-// router.beforeResolve(RouteGuard);
+router.beforeEach(routeGuard);
 
 export default router;
