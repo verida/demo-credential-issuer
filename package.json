@@ -10,7 +10,11 @@
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint"
 	},
+	"resolutions": {
+		"acorn": "8.0.1"
+	},
 	"dependencies": {
+		"@verida/verifiable-credentials": "^0.1.3",
 		"@verida/vue-account": "^0.1.18",
 		"core-js": "^3.6.5",
 		"store": "^2.0.12",

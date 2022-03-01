@@ -2,6 +2,7 @@ import {
   ICredentials,
   SchemaError,
 } from "@/interfaces/veridaClient.interfaces";
+import { Credentials } from "@verida/verifiable-credentials";
 
 const { VUE_APP_CONTEXT_NAME } = process.env;
 
@@ -9,9 +10,11 @@ class VeridaClient {
   private context: any;
   public did?: string;
   public errors?: any;
+  public credentials: any;
 
   public async connectVault(context: any): Promise<void> {
     this.context = context;
+    this.credentials = new Credentials(context);
     this.did = await context.getAccount().did();
   }
 
