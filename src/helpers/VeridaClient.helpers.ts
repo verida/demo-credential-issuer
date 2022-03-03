@@ -13,13 +13,14 @@ class VeridaClient {
   }
 
   async createDIDJwt(data: any): Promise<any> {
-    const credentialData = await this.credentials.createCredentialJWT(
-      this.did,
-      data
-    );
-    console.log(credentialData);
+    if (this.did && this.credentials) {
+      const credentialData = await this.credentials.createCredentialJWT(
+        this.did,
+        data
+      );
 
-    return credentialData;
+      return credentialData;
+    }
   }
 
   public async sendMessage(messageData: any, did: string): Promise<boolean> {
