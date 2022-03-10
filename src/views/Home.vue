@@ -164,22 +164,11 @@ export default defineComponent({
         summary: "Credential issued at " + issueDate.toDateString(),
       };
 
-      const didJwtVc = await veridaClient.createDIDJwt(formValues);
+      const credentialData = await veridaClient.createDIDJwt(formValues);
 
       const data = {
-        ...formValues,
-        didJwtVc,
+        credentialData,
       };
-
-      const isValid = await veridaClient.validateSchema(
-        data,
-        VUE_APP_MAPAY_SCHEMA
-      );
-
-      if (!isValid) {
-        this.$toast.error(veridaClient.errors[0].message);
-        return;
-      }
 
       this.isSubmitting = true;
 

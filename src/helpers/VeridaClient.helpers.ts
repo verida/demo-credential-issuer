@@ -1,48 +1,29 @@
-import {
-  ICredentials,
-  SchemaError,
-} from "@/interfaces/veridaClient.interfaces";
-
-const { VUE_APP_CONTEXT_NAME } = process.env;
+import { Credentials } from "@verida/verifiable-credentials";
 
 class VeridaClient {
   private context: any;
   public did?: string;
   public errors?: any;
+  public credentials?: Credentials;
 
   public async connectVault(context: any): Promise<void> {
     this.context = context;
+    this.credentials = new Credentials(context);
     this.did = await context.getAccount().did();
   }
 
-  async createDIDJwt(data: ICredentials): Promise<string> {
-    const contextName = VUE_APP_CONTEXT_NAME;
-    const jwtDID = await this.context
-      .getAccount()
-      .createDidJwt(contextName, data);
+  async createDIDJwt(data: any): Promise<any> {
+    if (this.did && this.credentials) {
+      const credentialData = await this.credentials.createCredentialJWT(
+        this.did,
+        data
+      );
 
-    return jwtDID;
-  }
-
-  async validateSchema(
-    data: ICredentials,
-    schemaUrl: string
-  ): Promise<SchemaError> {
-    const schemas = await this.context.getClient().getSchema(schemaUrl);
-    const isValid = await schemas.validate(data);
-    const errors = schemas.errors;
-
-    if (!isValid) {
-      this.errors?.push(errors);
+      return credentialData;
     }
-
-    return isValid;
   }
 
-  public async sendMessage(
-    messageData: ICredentials,
-    did: string
-  ): Promise<boolean> {
+  public async sendMessage(messageData: any, did: string): Promise<boolean> {
     const type = "inbox/type/dataSend";
 
     const data = {
