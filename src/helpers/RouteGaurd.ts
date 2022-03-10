@@ -5,8 +5,9 @@ const { VUE_APP_CONTEXT_NAME } = process.env;
 
 export const routeGuard = (to: any, from: any, next: any) => {
   if (to.matched.some((record: any) => record.meta.requiresAuth)) {
-    const profileFromStore = store.get(VUE_APP_CONTEXT_NAME);
-    if (profileFromStore) {
+    const isConnected = store.get(VUE_APP_CONTEXT_NAME);
+
+    if (isConnected) {
       next();
     } else {
       next("/connect");

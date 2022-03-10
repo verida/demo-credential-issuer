@@ -31,7 +31,6 @@ export default defineComponent({
   methods: {
     async onSuccess(context: any) {
       await veridaClient.connectVault(context);
-
       this.$router.push({ name: "Home" });
     },
     onError(error: any) {

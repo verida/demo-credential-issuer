@@ -1,5 +1,7 @@
 import { Credentials } from "@verida/verifiable-credentials";
+import store from "store";
 
+const { VUE_APP_CONTEXT_NAME } = process.env;
 class VeridaClient {
   private context: any;
   public did?: string;
@@ -8,6 +10,7 @@ class VeridaClient {
 
   public async connectVault(context: any): Promise<void> {
     this.context = context;
+    store.set(VUE_APP_CONTEXT_NAME, true);
     this.credentials = new Credentials(context);
     this.did = await context.getAccount().did();
   }
@@ -41,6 +44,7 @@ class VeridaClient {
 
   logout() {
     this.context = null;
+    store.remove(VUE_APP_CONTEXT_NAME);
   }
 }
 
