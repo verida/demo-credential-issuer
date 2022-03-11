@@ -149,6 +149,7 @@ export default defineComponent({
         this.validationError = true;
         return;
       }
+      this.isSubmitting = true;
 
       const issueDate = new Date();
 
@@ -164,17 +165,10 @@ export default defineComponent({
         summary: "Credential issued at " + issueDate.toDateString(),
       };
 
-      const credentialData = await veridaClient.createDIDJwt(formValues);
-
-      const data = {
-        credentialData,
-      };
-
-      this.isSubmitting = true;
-
       try {
-        await veridaClient.sendMessage(data, this.did);
-        this.$toast.success("Credentials Sent Succesfully");
+        const credentialData = await veridaClient.createDIDJwt(formValues);
+        await veridaClient.sendMessage(credentialData, this.did);
+        this.$toast.success("Credentials Sent Successfully");
       } catch (error) {
         this.$toast.error("Something went wrong  ");
       } finally {
