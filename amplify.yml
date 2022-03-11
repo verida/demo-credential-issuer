@@ -5,11 +5,11 @@ frontend:
       commands:
         - nvm install
         - nvm use
-        - npm install
-        - npm rebuild node-sass
+        - rm -rf ./node_modules
+        - yarn install --immutable --immutable-cache --check-cache
     build:
       commands:
-        - npm run build
+        - yarn build
   artifacts:
     baseDirectory: dist
     files:
