@@ -1,0 +1,93 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://verida.github.io/demo-credential-issuer/mapay/v0.1.0/schema.json",
+	"name": "Credential Issuer ",
+	"title": "Credential Issuer ",
+	"titlePlural": "Credentials Issuer ",
+	"description": "Credentials Issuer",
+	"type": "object",
+	"database": {
+		"name": "credential",
+		"indexes": {
+			"firstName": ["firstName"],
+			"lstName": ["lastName"],
+			"insertedAt": ["insertedAt"]
+		}
+	},
+	"appearance": {
+		"style": {
+			"color": "#FF886E",
+			"icon": "./credential_issuer.png"
+		}
+	},
+	"layouts": {
+		"create": [
+			"firstName",
+			"lastName",
+			"regNumber",
+			"testTimestamp",
+			"regExpDate"
+		],
+		"view": [
+			"firstName",
+			"lastName",
+			"regNumber",
+			"testTimestamp",
+			"regExpDate",
+			"healthType"
+		]
+	},
+	"allOf": [
+		{
+			"$ref": "https://core.schemas.verida.io/base/v0.1.0/schema.json"
+		},
+		{
+			"$ref": "https://common.schemas.verida.io/credential/base/v0.1.0/schema.json"
+		},
+		{
+			"properties": {
+				"firstName": {
+					"title": "First Name",
+					"type": "string"
+				},
+				"lastName": {
+					"title": "Last Name",
+					"type": "string"
+				},
+				"regNumber": {
+					"title": "Registration Number",
+					"type": "string"
+				},
+				"healthType": {
+					"title": "Health professional type",
+					"type": "string",
+					"enum": [
+						"Dentist",
+						"Psychologist",
+						"Optometrist",
+						"Pharmacist",
+						"Allied Health Professional"
+					]
+				},
+				"testTimestamp": {
+					"title": "Test timestamp",
+					"type": "string",
+					"format": "date-time"
+				},
+				"regExpDate": {
+					"title": "Registration Expiration Date",
+					"type": "string",
+					"format": "date",
+					"description": "YYYY-MM-DD"
+				}
+			},
+			"required": [
+				"firstName",
+				"lastName",
+				"regNumber",
+				"regExpDate",
+				"healthType"
+			]
+		}
+	]
+}
