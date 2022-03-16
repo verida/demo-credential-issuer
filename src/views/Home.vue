@@ -1,6 +1,6 @@
 <template>
-  <app-header />
-  <div class="app-section">
+  <app-header :setDid="setDid" />
+  <div v-if="did" class="app-section">
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />
       <h1>Register Licensed Professional</h1>
@@ -107,10 +107,14 @@
       </form>
     </div>
   </div>
+  <div class="loading-pulse" v-else>
+    <pulse-loader :loading="true" color="#000"></pulse-loader>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers";
 
 import AppHeader from "@/components/Header.vue";
@@ -121,10 +125,11 @@ export default defineComponent({
   name: "Home",
   components: {
     AppHeader,
+    PulseLoader,
   },
   data() {
     return {
-      did: veridaClient?.did || "",
+      did: "",
       firstName: "",
       lastName: "",
       regNumber: "",
@@ -178,6 +183,9 @@ export default defineComponent({
     toggleSelect() {
       this.selectOptions = !this.selectOptions;
     },
+    setDid(did: string) {
+      this.did = did;
+    },
 
     selectType(value: string) {
       this.healthSelectType = value;
@@ -212,6 +220,13 @@ export default defineComponent({
     margin-bottom: 3rem;
     color: #041133;
   }
+}
+
+.loading-pulse {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto;
 }
 
 .dropdown {

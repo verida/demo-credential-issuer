@@ -18,6 +18,12 @@ const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL } = process.env;
 
 export default defineComponent({
   name: "Header",
+  props: {
+    setDid: {
+      type: Function,
+      required: true,
+    },
+  },
   data() {
     return {
       isOpened: false,
@@ -31,6 +37,7 @@ export default defineComponent({
     },
     async onSuccess(context) {
       await veridaClient.connectVault(context);
+      this.setDid(veridaClient.did);
     },
     async onLogout() {
       veridaClient.logout();
