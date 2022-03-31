@@ -1878,10 +1878,10 @@
     tweetnacl-util "^0.15.1"
     url "^0.11.0"
 
-"@verida/vue-account@^0.1.19":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.19.tgz#738c01783a2251b391eb7b62344263a0c6413276"
-  integrity sha512-120/mkKZvY/Cuuav8vVCUtZDY2PzcsTr+lF6j0ICl1LceZCjPjyRHoZuc88qXFyeaHb+9reKhe4ZcHDlLjfpig==
+"@verida/vue-account@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.21.tgz#9928846da151fbb6d9609c0f0eb660443946851e"
+  integrity sha512-kPhjfyraeIDfwlulXetGlyDpqnZ/YCFFpeQspjD3nHwShw/xCqZMHEptSTNGoXwx1aQRfB4adWi2T15eK2IvMQ==
   dependencies:
     "@verida/account-web-vault" "^1.1.9"
     "@verida/client-ts" "^1.1.12"
