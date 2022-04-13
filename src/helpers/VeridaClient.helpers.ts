@@ -18,7 +18,7 @@ class VeridaClient {
   }
 
   async createDIDJwt(data: any, subjectDid: string): Promise<any> {
-    if (this.did && this.credentials) {
+    if (this.credentials) {
       const credentialData = await this.credentials.createCredentialJWT(
         subjectDid,
         data,
@@ -41,14 +41,7 @@ class VeridaClient {
 
     const messaging = await this.context.getMessaging();
     const subject = "New " + messageData.healthType + " Credential";
-    await messaging.send(
-      // "did:vda:0xA06d0a450eb6C46eEbB04C82deEAfAd1794E37E5",
-      did,
-      type,
-      data,
-      subject,
-      config
-    );
+    await messaging.send(did, type, data, subject, config);
     return true;
   }
 

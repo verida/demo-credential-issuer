@@ -1759,10 +1759,10 @@
     "@verida/encryption-utils" "^1.1.3"
     "@verida/keyring" "^1.1.3"
 
-"@verida/account-web-vault@^1.1.9":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@verida/account-web-vault/-/account-web-vault-1.1.10.tgz#db1160a38d9addf4ebd85d649d44b79906a64de4"
-  integrity sha512-aq5cZ0oVRdiyYpwYunVzjZw6rp5hhH8NCxlR7z7sLRzwJgKzoJC1vvy+2N8I+ryyD9XccAqC19rRHEr9qaYDPA==
+"@verida/account-web-vault@^1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@verida/account-web-vault/-/account-web-vault-1.1.11.tgz#8ded22d7faafdb61101203a503d922494ca7738f"
+  integrity sha512-eHkbBq2oerHqHBEI4kZNqNV+s2AdhiMyCiQOAfO5hTcFA9dtH64YGCbfdsQlS3t/USvYVKxM55cAIthM7rOJvw==
   dependencies:
     "@verida/account" "^1.1.9"
     "@verida/encryption-utils" "^1.1.3"
@@ -1781,31 +1781,6 @@
     did-jwt "5.7.0"
     lodash "^4.17.21"
     tweetnacl-util "^0.15.1"
-
-"@verida/client-ts@^1.1.12":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@verida/client-ts/-/client-ts-1.1.13.tgz#b467b1c5ee6f7ab0a8843ce75dbf22610b3708ca"
-  integrity sha512-RZnUQIelHmrGxzwWZctWh+k6dv1BNJXYIj0GgsCIbrqCJYjBF37ITpUherfvIKiEkBSgZsfu1TkHAuZMF42ZJw==
-  dependencies:
-    "@verida/account" "^1.1.9"
-    "@verida/account-node" "^1.1.9"
-    "@verida/did-client" "^0.1.8"
-    "@verida/did-document" "^1.0.5"
-    "@verida/encryption-utils" "^1.1.3"
-    "@verida/keyring" "^1.1.3"
-    "@verida/storage-link" "^1.1.8"
-    ajv "^8.6.3"
-    ajv-formats "^2.1.1"
-    axios "^0.21.2"
-    bs58 "^4.0.1"
-    crypto-pouch "git+https://github.com/tahpot/crypto-pouch.git#feature/support-key-import"
-    did-jwt "5.7.0"
-    json-schema-ref-parser "^9.0.9"
-    json-schema-resolve-allof "^1.5.0"
-    lodash "^4.17.21"
-    pouchdb "^7.2.2"
-    pouchdb-find "^7.2.2"
-    uuid "^8.3.2"
 
 "@verida/client-ts@^1.1.14":
   version "1.1.14"
@@ -1903,13 +1878,13 @@
     tweetnacl-util "^0.15.1"
     url "^0.11.0"
 
-"@verida/vue-account@^0.1.19":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.19.tgz#738c01783a2251b391eb7b62344263a0c6413276"
-  integrity sha512-120/mkKZvY/Cuuav8vVCUtZDY2PzcsTr+lF6j0ICl1LceZCjPjyRHoZuc88qXFyeaHb+9reKhe4ZcHDlLjfpig==
+"@verida/vue-account@^0.1.26":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.26.tgz#5f0e9fad8446bda1e987c7b34dde7aac78b677c5"
+  integrity sha512-nhMtDm37tUcbVpcMiZ0BebPP0Tfvupd8lx6AFxeFZl5dgWD7EpMPQUqB69dGsnU7XGzcpbdMABvfA1X+opmE/w==
   dependencies:
-    "@verida/account-web-vault" "^1.1.9"
-    "@verida/client-ts" "^1.1.12"
+    "@verida/account-web-vault" "^1.1.11"
+    "@verida/client-ts" "^1.1.14"
     store "^2.0.12"
     vue-clipboard2 "^0.3.3"
 
