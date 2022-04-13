@@ -1,6 +1,6 @@
 <template>
   <app-header :setDid="setDid" />
-  <div v-if="did" class="app-section">
+  <div v-if="connected" class="app-section">
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />
       <h1>Register Licensed Professional</h1>
@@ -129,6 +129,7 @@ export default defineComponent({
   },
   data() {
     return {
+      connected: veridaClient.connected,
       did: "",
       firstName: "",
       lastName: "",
@@ -171,7 +172,10 @@ export default defineComponent({
       };
 
       try {
-        const credentialData = await veridaClient.createDIDJwt(formValues);
+        const credentialData = await veridaClient.createDIDJwt(
+          formValues,
+          this.did
+        );
         await veridaClient.sendMessage(credentialData, this.did);
         this.$toast.success("Credentials Sent Successfully");
       } catch (error) {
