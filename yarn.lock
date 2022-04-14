@@ -1877,10 +1877,11 @@
     lodash "^4.17.21"
     tweetnacl-util "^0.15.1"
     url "^0.11.0"
-"@verida/vue-account@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.26.tgz#5f0e9fad8446bda1e987c7b34dde7aac78b677c5"
-  integrity sha512-nhMtDm37tUcbVpcMiZ0BebPP0Tfvupd8lx6AFxeFZl5dgWD7EpMPQUqB69dGsnU7XGzcpbdMABvfA1X+opmE/w==
+
+"@verida/vue-account@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.28.tgz#c6c244002b68f0e527b4a1e643c421a30bdbd241"
+  integrity sha512-pF4TIiDKsnMWLSyNHa6PUqVoB4ENfuGjVO7/OhY4BGxdVG4MelwOzjQB//Pm6fl1uXvMgsviDBAG317magAfWg==
   dependencies:
     "@verida/account-web-vault" "^1.1.11"
     "@verida/client-ts" "^1.1.14"

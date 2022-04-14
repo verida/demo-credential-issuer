@@ -1,5 +1,5 @@
 <template>
-  <app-header :setDid="setDid" />
+  <app-header :setStatus="setStatus" />
   <div v-if="connected" class="app-section">
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />
@@ -19,7 +19,7 @@
             />
           </div>
           <div class="form-block">
-            <label for="healt-type"> Health professional type </label>
+            <label for="health-type"> Health professional type </label>
             <span v-show="validationError" class="error-message"
               >Please choose Health professional type !
             </span>
@@ -187,8 +187,9 @@ export default defineComponent({
     toggleSelect() {
       this.selectOptions = !this.selectOptions;
     },
-    setDid(did: string) {
-      this.did = did;
+    setStatus(status: boolean) {
+      this.connected = status;
+      this.did = veridaClient.did as string;
     },
 
     selectType(value: string) {
