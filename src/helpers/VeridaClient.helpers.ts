@@ -5,21 +5,24 @@ const { VUE_APP_CONTEXT_NAME } = process.env;
 class VeridaClient {
   private context: any;
   public did?: string;
+  public connected?: boolean;
   public errors?: any;
   public credentials?: Credentials;
 
   public async connectVault(context: any): Promise<void> {
     this.context = context;
+    this.connected = true;
     store.set(VUE_APP_CONTEXT_NAME, true);
-    this.credentials = new Credentials(context);
+    this.credentials = new Credentials();
     this.did = await context.getAccount().did();
   }
 
-  async createDIDJwt(data: any): Promise<any> {
-    if (this.did && this.credentials) {
+  async createDIDJwt(data: any, subjectDid: string): Promise<any> {
+    if (this.credentials) {
       const credentialData = await this.credentials.createCredentialJWT(
-        this.did,
-        data
+        subjectDid,
+        data,
+        this.context
       );
 
       return credentialData;
@@ -44,6 +47,7 @@ class VeridaClient {
 
   logout() {
     this.context = null;
+    this.connected = false;
     store.remove(VUE_APP_CONTEXT_NAME);
   }
 }

@@ -1,6 +1,6 @@
 <template>
-  <app-header :setDid="setDid" />
-  <div v-if="did" class="app-section">
+  <app-header :setStatus="setStatus" />
+  <div v-if="connected" class="app-section">
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />
       <h1>Register Licensed Professional</h1>
@@ -19,7 +19,7 @@
             />
           </div>
           <div class="form-block">
-            <label for="healt-type"> Health professional type </label>
+            <label for="health-type"> Health professional type </label>
             <span v-show="validationError" class="error-message"
               >Please choose Health professional type !
             </span>
@@ -129,6 +129,7 @@ export default defineComponent({
   },
   data() {
     return {
+      connected: veridaClient.connected,
       did: "",
       firstName: "",
       lastName: "",
@@ -171,7 +172,10 @@ export default defineComponent({
       };
 
       try {
-        const credentialData = await veridaClient.createDIDJwt(formValues);
+        const credentialData = await veridaClient.createDIDJwt(
+          formValues,
+          this.did
+        );
         await veridaClient.sendMessage(credentialData, this.did);
         this.$toast.success("Credentials Sent Successfully");
       } catch (error) {
@@ -183,8 +187,9 @@ export default defineComponent({
     toggleSelect() {
       this.selectOptions = !this.selectOptions;
     },
-    setDid(did: string) {
-      this.did = did;
+    setStatus(status: boolean) {
+      this.connected = status;
+      this.did = veridaClient.did as string;
     },
 
     selectType(value: string) {

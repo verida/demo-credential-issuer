@@ -19,7 +19,7 @@ const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL } = process.env;
 export default defineComponent({
   name: "Header",
   props: {
-    setDid: {
+    setStatus: {
       type: Function,
       required: true,
     },
@@ -37,7 +37,7 @@ export default defineComponent({
     },
     async onSuccess(context) {
       await veridaClient.connectVault(context);
-      this.setDid(veridaClient.did);
+      this.setStatus(veridaClient.connected);
     },
     async onLogout() {
       veridaClient.logout();
