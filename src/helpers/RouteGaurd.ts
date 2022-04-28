@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import store from "store";
 
-const { VUE_APP_CONTEXT_NAME } = process.env;
+const { VUE_APP_CONTEXT_NAME }: any = process.env;
 
 export const routeGuard = (to: any, from: any, next: any) => {
   if (to.matched.some((record: any) => record.meta.requiresAuth)) {

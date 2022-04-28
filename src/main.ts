@@ -10,7 +10,7 @@ import "./assets/scss/main.scss";
 
 const app = createApp(App);
 
-app.use(Account);
+app.use(Account as any);
 
 app.use(router);
 

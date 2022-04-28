@@ -1,7 +1,7 @@
 import { Credentials } from "@verida/verifiable-credentials";
 import store from "store";
 
-const { VUE_APP_CONTEXT_NAME } = process.env;
+const { VUE_APP_CONTEXT_NAME }: any = process.env;
 class VeridaClient {
   private context: any;
   public did?: string;
@@ -17,13 +17,14 @@ class VeridaClient {
     this.did = await context.getAccount().did();
   }
 
-  async createDIDJwt(data: any, subjectDid: string): Promise<any> {
+  async createDIDJwt(data: any, subjectId: string): Promise<any> {
     if (this.credentials) {
-      const credentialData = await this.credentials.createCredentialJWT(
-        subjectDid,
+      const credentialData = await this.credentials.createCredentialJWT({
+        subjectId,
         data,
-        this.context
-      );
+        context: this.context,
+        veridaContextName: "Verida: Vault",
+      });
 
       return credentialData;
     }
