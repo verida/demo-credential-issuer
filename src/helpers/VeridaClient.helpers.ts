@@ -1,7 +1,7 @@
+import { CONTEXT_NAME } from "@/constants";
 import { Credentials } from "@verida/verifiable-credentials";
 import store from "store";
 
-const { VUE_APP_CONTEXT_NAME } = process.env;
 class VeridaClient {
   private context: any;
   public did?: string;
@@ -12,18 +12,19 @@ class VeridaClient {
   public async connectVault(context: any): Promise<void> {
     this.context = context;
     this.connected = true;
-    store.set(VUE_APP_CONTEXT_NAME, true);
+    store.set(CONTEXT_NAME, true);
     this.credentials = new Credentials();
     this.did = await context.getAccount().did();
   }
 
   async createDIDJwt(data: any, subjectDid: string): Promise<any> {
     if (this.credentials) {
-      const credentialData = await this.credentials.createCredentialJWT(
-        subjectDid,
+      const credentialData = await this.credentials.createCredentialJWT({
+        context: this.context,
         data,
-        this.context
-      );
+        subjectId: subjectDid,
+        veridaContextName: CONTEXT_NAME,
+      });
 
       return credentialData;
     }
@@ -48,7 +49,7 @@ class VeridaClient {
   logout() {
     this.context = null;
     this.connected = false;
-    store.remove(VUE_APP_CONTEXT_NAME);
+    store.remove(CONTEXT_NAME);
   }
 }
 

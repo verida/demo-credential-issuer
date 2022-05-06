@@ -1,0 +1,6 @@
+const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL, VUE_APP_LOGIN_TEXT }: any =
+  process.env;
+
+export const CONTEXT_NAME = VUE_APP_CONTEXT_NAME;
+export const LOGO_URL = VUE_APP_LOGO_URL;
+export const LOGIN_TEXT = VUE_APP_LOGIN_TEXT;
