@@ -19,12 +19,11 @@ class VeridaClient {
 
   async createDIDJwt(data: any, subjectDid: string): Promise<any> {
     if (this.credentials) {
-      const credentialData = await this.credentials.createCredentialJWT({
-        context: this.context,
+      const credentialData = await this.credentials.createCredentialJWT(
+        subjectDid,
         data,
-        subjectId: subjectDid,
-        veridaContextName: CONTEXT_NAME,
-      });
+        this.context
+      );
 
       return credentialData;
     }
