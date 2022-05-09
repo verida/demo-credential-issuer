@@ -2,7 +2,7 @@
   <vda-login
     @onError="onError"
     @onConnected="onSuccess"
-    contextName="contextName"
+    :contextName="contextName"
     :logo="logo"
     :loginText="loginText"
   />

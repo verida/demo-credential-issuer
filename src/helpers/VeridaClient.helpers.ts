@@ -4,7 +4,7 @@ import store from "store";
 
 class VeridaClient {
   private context: any;
-  public did?: string;
+  public did = "";
   public connected?: boolean;
   public errors?: any;
   public credentials?: Credentials;
