@@ -4,8 +4,8 @@
     <vda-account
       :logo="logo"
       :contextName="contextName"
-      :onLogout="onLogout"
-      :onSuccess="onSuccess"
+      @onLogout="onLogout"
+      @onConnected="onSuccess"
     />
   </header>
 </template>

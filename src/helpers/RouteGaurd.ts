@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { CONTEXT_NAME } from "@/constants";
 import store from "store";
-
-const { VUE_APP_CONTEXT_NAME } = process.env;
 
 export const routeGuard = (to: any, from: any, next: any) => {
   if (to.matched.some((record: any) => record.meta.requiresAuth)) {
-    const isConnected = store.get(VUE_APP_CONTEXT_NAME);
+    const isConnected = store.get(CONTEXT_NAME);
 
     if (isConnected) {
       next();

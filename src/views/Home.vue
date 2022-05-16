@@ -130,7 +130,7 @@ export default defineComponent({
   data() {
     return {
       connected: veridaClient.connected,
-      did: "",
+      did: veridaClient.did,
       firstName: "",
       lastName: "",
       regNumber: "",
