@@ -1825,14 +1825,6 @@
     "@verida/keyring" "^1.1.3"
     did-resolver "^3.1.2"
 
-"@verida/did-resolver@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@verida/did-resolver/-/did-resolver-0.1.9.tgz#7f97cfdeddab52751f9e393f67cba319da79e160"
-  integrity sha512-zuGmfmLizOnaFkg9Sa22Zgc6nH+gP7G2/GPq8PxXPT+JxALMRsjRVKBlLrcL24kieHhGoEkYuqkVdBY1H1xwTQ==
-  dependencies:
-    "@verida/did-client" "^0.1.8"
-    did-resolver "^3.1.2"
-
 "@verida/encryption-utils@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@verida/encryption-utils/-/encryption-utils-1.1.3.tgz#e2c2f4918027f3e53d938fb3bc3966ebf1571249"
@@ -1862,21 +1854,6 @@
     "@verida/encryption-utils" "^1.1.3"
     "@verida/keyring" "^1.1.3"
     url-parse "^1.5.3"
-
-"@verida/verifiable-credentials@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@verida/verifiable-credentials/-/verifiable-credentials-0.1.5.tgz#7ecdd29b73e65c7fa076591ca1e7a0c629927d58"
-  integrity sha512-9C9yJYm0Ikxbt+KpkowWrRBhdIqonVoCubHXn7fH8uZGVcE3cKZHZSggm7v6mRyleFRVT6I7LK+W3/Vyt9+7og==
-  dependencies:
-    "@verida/client-ts" "^1.1.14"
-    "@verida/did-resolver" "^0.1.9"
-    "@verida/encryption-utils" "^1.1.3"
-    dayjs "^1.10.7"
-    did-jwt "^5.12.1"
-    did-jwt-vc "^2.1.8"
-    lodash "^4.17.21"
-    tweetnacl-util "^0.15.1"
-    url "^0.11.0"
 
 "@verida/vue-account@^0.1.33":
   version "0.1.33"
@@ -2924,11 +2901,6 @@ bech32@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
-
-bech32@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/bech32/-/bech32-2.0.0.tgz#078d3686535075c8c79709f054b1b226a133b355"
-  integrity sha512-LcknSilhIGatDAsY1ak2I8VtGaHNhgMSYVxFrGLXv+xLHytaKZKcaUJJUE7qmBr7h33o5YQwP55pMI0xmkpJwg==
 
 bfj@^6.1.1:
   version "6.1.2"
@@ -4079,11 +4051,6 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-dayjs@^1.10.7:
-  version "1.10.8"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.8.tgz#267df4bc6276fcb33c04a6735287e3f429abec41"
-  integrity sha512-wbNwDfBHHur9UOzNUjeKUOJ0fCb0a52Wx0xInmQ7Y8FstyajiV1NmK1e00cxsr9YrE9r7yAChE0VvpuY5Rnlow==
-
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -4260,14 +4227,6 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
-did-jwt-vc@^2.1.8:
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/did-jwt-vc/-/did-jwt-vc-2.1.9.tgz#894c68d86083f620ee2bdb36e0097f35b28f079a"
-  integrity sha512-FBgJBZkdJAGtF0fp8NPgtJmpglRc/ZQ2C1KNevHKmOLgjPrVIeJw5xL8pw0wFwoA2E+uCaXkrZrNtcLQXHG6IQ==
-  dependencies:
-    did-jwt "^5.12.3"
-    did-resolver "^3.1.5"
-
 did-jwt@5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-5.7.0.tgz#7c5284daece5c86388db90e1274d0df63bb20f52"
@@ -4284,25 +4243,7 @@ did-jwt@5.7.0:
     js-sha3 "^0.8.0"
     uint8arrays "^3.0.0"
 
-did-jwt@^5.12.1, did-jwt@^5.12.3:
-  version "5.12.4"
-  resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-5.12.4.tgz#6357a550173b7155f2e5cf3b8ea3f8e8be180617"
-  integrity sha512-rFY7yIlE/79zB648Drn9vLiM+F4+3IzRkFvBcHelZqQmnPy037U9VWeeP/f2PlnQKgW5qbYXVJR5KftLfo58TA==
-  dependencies:
-    "@stablelib/ed25519" "^1.0.2"
-    "@stablelib/random" "^1.0.1"
-    "@stablelib/sha256" "^1.0.1"
-    "@stablelib/x25519" "^1.0.1"
-    "@stablelib/xchacha20poly1305" "^1.0.1"
-    bech32 "^2.0.0"
-    canonicalize "^1.0.5"
-    did-resolver "^3.1.5"
-    elliptic "^6.5.4"
-    js-sha3 "^0.8.0"
-    multiformats "^9.4.10"
-    uint8arrays "^3.0.0"
-
-did-resolver@^3.1.0, did-resolver@^3.1.2, did-resolver@^3.1.5:
+did-resolver@^3.1.0, did-resolver@^3.1.2:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/did-resolver/-/did-resolver-3.1.5.tgz#1a82a00fa96d64085676183bff40ebc13c88cd6a"
   integrity sha512-/4lM1vK5osnWVZ2oN9QhlWV5xOwssuLSL1MvueBc8LQWotbD5kM9XQMe7h4GydYpbh3JaWMFkOWwc9jvSZ+qgg==
@@ -7310,7 +7251,7 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
-multiformats@^9.4.10, multiformats@^9.4.2:
+multiformats@^9.4.2:
   version "9.6.4"
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.6.4.tgz#5dce1f11a407dbb69aa612cb7e5076069bb759ca"
   integrity sha512-fCCB6XMrr6CqJiHNjfFNGT0v//dxOBMrOMqUIzpPc/mmITweLEyhvMpY9bF+jZ9z3vaMAau5E8B68DW77QMXkg==
