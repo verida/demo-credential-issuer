@@ -11,6 +11,7 @@
     @onConnected="onSuccess"
     :contextName="contextName"
     :logo="logo"
+    :openUrl="openUrl"
     :loginText="loginText"
   />
 </template>
@@ -29,6 +30,7 @@ export default defineComponent({
     return {
       isLoading: false,
       error: null,
+      openUrl: window.origin,
       contextName: CONTEXT_NAME,
       logo: LOGO_URL,
       loginText: LOGIN_TEXT,
