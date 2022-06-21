@@ -1,26 +1,36 @@
 <template>
+  <pulse-loader
+    class="loader"
+    v-if="isLoading"
+    color="#000"
+    :loading="isLoading"
+  />
   <vda-login
+    v-else
     @onError="onError"
     @onConnected="onSuccess"
     :contextName="contextName"
     :logo="logo"
+    :openUrl="openUrl"
     :loginText="loginText"
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers/";
 import { CONTEXT_NAME, LOGIN_TEXT, LOGO_URL } from "@/constants";
 
 export default defineComponent({
   name: "Connect",
   props: {},
-  components: {},
+  components: { PulseLoader },
   data() {
     return {
       isLoading: false,
       error: null,
+      openUrl: window.origin,
       contextName: CONTEXT_NAME,
       logo: LOGO_URL,
       loginText: LOGIN_TEXT,
@@ -28,8 +38,16 @@ export default defineComponent({
   },
   methods: {
     async onSuccess(context: any) {
-      await veridaClient.connectVault(context);
-      this.$router.push({ name: "Home" });
+      try {
+        this.isLoading = true;
+        await veridaClient.connectVault(context);
+
+        this.$router.push({ name: "Home" });
+      } catch (error: any) {
+        this.error = error;
+      } finally {
+        this.isLoading = false;
+      }
     },
     onError(error: any) {
       this.error = error;
@@ -41,36 +59,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "../assets/scss/main.scss";
 
-.login-container {
-  @extend .app-container;
-}
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.connect {
-  padding: 1rem 0;
-  height: 20rem;
-  & > * {
-    margin: 0.7rem 0;
-  }
-
-  h3 {
-    font-weight: 600;
-    font-size: 2.5rem;
-  }
-  p {
-    word-break: inherit;
-  }
-  button {
-    background: transparent;
-    outline: none;
-    border: none;
-  }
-}
-
-.loader {
-  @extend .connect;
+  margin: auto;
+  height: 40rem;
 }
 </style>

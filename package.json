@@ -15,7 +15,7 @@
 	},
 	"dependencies": {
 		"@verida/verifiable-credentials": "^0.1.6",
-		"@verida/vue-account": "^0.1.33",
+		"@verida/vue-account": "^0.1.35",
 		"core-js": "^3.6.5",
 		"store": "^2.0.12",
 		"vue": "^3.0.0",
@@ -38,6 +38,7 @@
 		"eslint": "^6.7.2",
 		"eslint-plugin-prettier": "^3.3.1",
 		"eslint-plugin-vue": "^7.0.0",
+		"github-release-notes": "^0.17.3",
 		"node-sass": "6.0.1",
 		"prettier": "^2.2.1",
 		"sass-loader": "10",

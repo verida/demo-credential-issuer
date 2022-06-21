@@ -8,6 +8,7 @@ class VeridaClient {
   public connected?: boolean;
   public errors?: any;
   public credentials?: Credentials;
+  private messagingInstance: any;
 
   public async connectVault(context: any): Promise<void> {
     this.context = context;
@@ -15,6 +16,7 @@ class VeridaClient {
     store.set(CONTEXT_NAME, true);
     this.credentials = new Credentials();
     this.did = await context.getAccount().did();
+    this.messagingInstance = await context.getMessaging();
   }
 
   async createDIDJwt(data: any, subjectDid: string): Promise<any> {
@@ -37,10 +39,8 @@ class VeridaClient {
     const config = {
       recipientContextName: "Verida: Vault",
     };
-
-    const messaging = await this.context.getMessaging();
     const subject = "New " + messageData.healthType + " Credential";
-    await messaging.send(did, type, data, subject, config);
+    await this.messagingInstance.send(did, type, data, subject, config);
     return true;
   }
 
