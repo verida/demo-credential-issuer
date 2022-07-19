@@ -155,6 +155,7 @@ export default defineComponent({
         this.validationError = true;
         return;
       }
+
       this.isSubmitting = true;
 
       const issueDate = new Date();
@@ -179,6 +180,8 @@ export default defineComponent({
         await veridaClient.sendMessage(credentialData, this.did);
         this.$toast.success("Credentials Sent Successfully");
       } catch (error) {
+        console.log({ error });
+
         this.$toast.error("Something went wrong  ");
       } finally {
         this.isSubmitting = false;
