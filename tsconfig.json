@@ -33,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "WorkerApi.ts", "worker.ts"  ],
   "exclude": [
     "node_modules",
     "verida-vue-components"

@@ -21,6 +21,7 @@ import { defineComponent } from "vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers/";
 import { CONTEXT_NAME, LOGIN_TEXT, LOGO_URL } from "@/constants";
+import webWorker from "@/web-workers";
 
 export default defineComponent({
   name: "Connect",
@@ -34,6 +35,7 @@ export default defineComponent({
       contextName: CONTEXT_NAME,
       logo: LOGO_URL,
       loginText: LOGIN_TEXT,
+      message: "",
     };
   },
   methods: {
@@ -41,6 +43,9 @@ export default defineComponent({
       try {
         this.isLoading = true;
         await veridaClient.connectVault(context);
+
+        // initialize messaging in a different thread
+        webWorker.send(context);
 
         this.$router.push({ name: "Home" });
       } catch (error: any) {

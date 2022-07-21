@@ -13,6 +13,7 @@
 <script>
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
+import webWorker from "@/web-workers";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL } = process.env;
 
@@ -37,6 +38,9 @@ export default defineComponent({
     },
     async onSuccess(context) {
       await veridaClient.connectVault(context);
+
+      // initialize messaging in a different thread
+      webWorker.send(context);
       this.setStatus(veridaClient.connected);
     },
     async onLogout() {
