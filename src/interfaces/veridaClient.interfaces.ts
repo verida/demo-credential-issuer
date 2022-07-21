@@ -11,4 +11,6 @@ export interface ICredentials {
   regExpDate: string;
   name: string;
   summary?: string;
+  did: string;
+  healthSelectType?: string;
 }

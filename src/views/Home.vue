@@ -4,98 +4,47 @@
     <div class="credential-form">
       <img src="../assets/images/verida_logo.svg" alt="verida" />
       <h1>Register Licensed Professional</h1>
-      <form @submit.prevent="onSubmit">
-        <div class="grid-form">
-          <div class="form-block">
-            <label for="did-number"> DID </label>
-            <input
-              required
-              type="text"
-              :disabled="isSubmitting"
-              name="did-number"
-              v-model="did"
-              id="did-number"
-              placeholder="e.g (did:vda:...)"
-            />
-          </div>
-          <div class="form-block">
-            <label for="health-type"> Health professional type </label>
-            <span v-show="validationError" class="error-message"
-              >Please choose Health professional type !
-            </span>
-            <div class="dropdown">
-              <div class="dropdown-value" @click="toggleSelect">
-                <span
-                  :class="[
-                    healthSelectType !== 'Not Selected' &&
-                      'dropdown-value-text',
-                  ]"
-                  >{{ healthSelectType }}</span
-                >
-                <img
-                  src="../assets/images/arrow_up.png"
-                  alt="mapay"
-                  v-if="selectOptions"
-                />
-                <img src="../assets/images/arrow_down.png" alt="mapay" v-else />
-              </div>
-              <div v-show="selectOptions" class="dropdown-select">
-                <div v-for="(type, index) in healthTypes" :key="index">
-                  <span @click="selectType(type)">{{ type }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-block">
-            <label for="first-name"> First Name</label>
-            <input
-              required
-              type="text"
-              v-model="firstName"
-              name="first-name"
-              id="first-name"
-              :disabled="isSubmitting"
-              placeholder="e.g John"
-            />
-          </div>
-          <div class="form-block">
-            <label for="last-name"> Last Name</label>
-            <input
-              required
-              type="text"
-              v-model="lastName"
-              name="last-name"
-              :disabled="isSubmitting"
-              id="last-name"
-              placeholder="e.g Smith"
-            />
-          </div>
-          <div class="form-block">
-            <label for="reg-number">Registration Number</label>
-            <input
-              required
-              type="text"
-              v-model="regNumber"
-              name="reg-number"
-              :disabled="isSubmitting"
-              id="reg-number"
-              placeholder="e.g BAC12920"
-            />
-          </div>
-          <div class="form-block">
-            <label for="reg-exp-date">Registration expiring date</label>
-            <input
-              required
-              type="date"
-              v-model="regExpDate"
-              name="reg-exp-date"
-              id="reg-exp-date"
-              :disabled="isSubmitting"
-              placeholder="dd/mm/yy"
-            />
-          </div>
+      <Form
+        @submit="onSubmit"
+        :validation-schema="validationSchema"
+        class="grid-form"
+      >
+        <div class="form-block">
+          <label for="did"> DID </label>
+          <Field name="did" type="text" :value="did" />
+          <ErrorMessage class="error-message" name="did" />
         </div>
-        <div class="submit-btn">
+        <div class="form-block">
+          <label for="health-type"> Health type </label>
+          <Field name="healthType" as="select">
+            <option value="">Select type</option>
+            <option v-for="type in healthTypes" :key="type" :value="type">
+              {{ type }}
+            </option>
+          </Field>
+          <ErrorMessage class="error-message" name="healthType" />
+        </div>
+        <div class="form-block">
+          <label for="firstName"> First Name </label>
+          <Field name="firstName" type="text" />
+          <ErrorMessage class="error-message" name="firstName" />
+        </div>
+        <div class="form-block">
+          <label for="lastName"> Last Name </label>
+          <Field name="lastName" type="text" />
+          <ErrorMessage class="error-message" name="lastName" />
+        </div>
+        <div class="form-block">
+          <label for="Reg Number"> Reg Number </label>
+          <Field name="regNumber" type="number" />
+          <ErrorMessage class="error-message" name="regNumber" />
+        </div>
+        <div class="form-block">
+          <label for="Reg Exp. Number"> Reg Exp. Number </label>
+          <Field name="regExpDate" type="date" />
+          <ErrorMessage class="error-message" name="regExpDate" />
+        </div>
+        <div class="submit-btn form-block-btn">
           <button
             :class="['btn-default', isSubmitting && 'loading']"
             type="submit"
@@ -104,7 +53,7 @@
             Issue Credential
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   </div>
   <div class="loading-pulse" v-else>
@@ -114,10 +63,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { Form, Field, ErrorMessage } from "vee-validate";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers";
+import { formSchema } from "@/utils/formValidation";
 
 import AppHeader from "@/components/Header.vue";
+import { ICredentials } from "@/interfaces/veridaClient.interfaces";
 
 const { VUE_APP_MAPAY_SCHEMA } = process.env;
 
@@ -126,15 +78,14 @@ export default defineComponent({
   components: {
     AppHeader,
     PulseLoader,
+    Form,
+    Field,
+    ErrorMessage,
   },
   data() {
     return {
       connected: veridaClient.connected,
       did: veridaClient.did,
-      firstName: "",
-      lastName: "",
-      regNumber: "",
-      regExpDate: "",
       healthTypes: [
         "Dentist",
         "Psychologist",
@@ -142,59 +93,45 @@ export default defineComponent({
         "Pharmacist",
         "Allied Health Professional",
       ],
-      healthSelectType: "Not Selected",
-      selectOptions: false,
       isSubmitting: false,
-      validationError: false,
+      validationSchema: formSchema,
     };
   },
   methods: {
-    async onSubmit() {
-      this.validationError = false;
-      if (this.healthSelectType === "Not Selected") {
-        this.validationError = true;
-        return;
-      }
+    async onSubmit(values: ICredentials) {
       this.isSubmitting = true;
 
       const issueDate = new Date();
 
+      const { firstName, lastName, regNumber, healthType, regExpDate, did } =
+        values;
+
       const formValues = {
-        name: "Your " + this.healthSelectType + " Credential",
-        firstName: this.firstName,
-        lastName: this.lastName,
-        regNumber: this.regNumber,
-        healthType: this.healthSelectType,
-        regExpDate: this.regExpDate,
+        name: "Your " + healthType + " Credential",
+        firstName,
+        lastName,
+        regNumber,
+        healthType,
+        regExpDate,
         schema: VUE_APP_MAPAY_SCHEMA,
         testTimestamp: issueDate.toISOString(),
         summary: "Credential issued at " + issueDate.toDateString(),
       };
 
       try {
-        const credentialData = await veridaClient.createDIDJwt(
-          formValues,
-          this.did
-        );
-        await veridaClient.sendMessage(credentialData, this.did);
+        const credentialData = await veridaClient.createDIDJwt(formValues, did);
+        await veridaClient.sendMessage(credentialData, did);
         this.$toast.success("Credentials Sent Successfully");
-      } catch (error) {
-        this.$toast.error("Something went wrong  ");
+      } catch (error: any) {
+        this.$toast.error(error.message);
       } finally {
         this.isSubmitting = false;
       }
     },
-    toggleSelect() {
-      this.selectOptions = !this.selectOptions;
-    },
+
     setStatus(status: boolean) {
       this.connected = status;
       this.did = veridaClient.did as string;
-    },
-
-    selectType(value: string) {
-      this.healthSelectType = value;
-      this.selectOptions = false;
     },
   },
 });
@@ -202,6 +139,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../assets/scss/main.scss";
+
+.error-message {
+  color: red;
+}
 
 .input-text {
   font-weight: 600;
@@ -312,6 +253,7 @@ form {
     }
   }
 }
+
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -321,13 +263,17 @@ form {
   }
 
   .form-block {
+    &-btn {
+      grid-column: 1 /3;
+    }
     text-align: left;
     margin: 0.8rem 1.2rem;
     label {
       display: block;
       margin-bottom: 0.125rem;
     }
-    input {
+    input,
+    select {
       width: 20.5rem;
       height: 3rem;
       background: #ffffff;
