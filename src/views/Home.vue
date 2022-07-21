@@ -103,24 +103,24 @@ export default defineComponent({
 
       const issueDate = new Date();
 
+      const { firstName, lastName, regNumber, healthType, regExpDate, did } =
+        values;
+
       const formValues = {
-        name: "Your " + values.healthSelectType + " Credential",
-        firstName: values.firstName,
-        lastName: values.lastName,
-        regNumber: values.regNumber,
-        healthType: values.healthType,
-        regExpDate: values.regExpDate,
+        name: "Your " + healthType + " Credential",
+        firstName,
+        lastName,
+        regNumber,
+        healthType,
+        regExpDate,
         schema: VUE_APP_MAPAY_SCHEMA,
         testTimestamp: issueDate.toISOString(),
         summary: "Credential issued at " + issueDate.toDateString(),
       };
 
       try {
-        const credentialData = await veridaClient.createDIDJwt(
-          formValues,
-          values.did
-        );
-        await veridaClient.sendMessage(credentialData, values.did);
+        const credentialData = await veridaClient.createDIDJwt(formValues, did);
+        await veridaClient.sendMessage(credentialData, did);
         this.$toast.success("Credentials Sent Successfully");
       } catch (error: any) {
         this.$toast.error(error.message);
