@@ -6,14 +6,14 @@ const worker = new Worker();
 
 const promiseWorker = new PromiseWorker(worker);
 
-const send = async (message: any) => {
-    const app = await veridaClient.initMessaging(message);
-    return promiseWorker.postMessage({
-        type: "message",
-        app,
-    });
+const send = async (message: unknown) => {
+  const app = await veridaClient.initMessaging(message);
+  return promiseWorker.postMessage({
+    type: "message",
+    app,
+  });
 };
 
 export default {
-    send,
+  send,
 };
