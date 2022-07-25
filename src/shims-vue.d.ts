@@ -7,3 +7,4 @@ declare module '*.vue' {
 
 
 declare module "worker-loader";
+declare module "vee-validate";
