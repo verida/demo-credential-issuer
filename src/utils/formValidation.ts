@@ -11,7 +11,7 @@ const parseDateString = (value: string, originalValue: string) => {
 const today = new Date();
 
 export const formSchema = yup.object({
-  firstName: yup.string().required().label("Firstname"),
+  firstName: yup.string().required().label("First name"),
   did: yup
     .string()
     .required()
@@ -23,7 +23,12 @@ export const formSchema = yup.object({
     .number()
     .required()
     .min(5)
-    .label("Min of 5 numbers characters"),
-  regExpDate: yup.date().transform(parseDateString).max(today).required(),
-  healthType: yup.string().required(),
+    .label("Registration Number is a required field"),
+  regExpDate: yup
+    .date()
+    .transform(parseDateString)
+    .max(today)
+    .required()
+    .label("Registration Expiration Date"),
+  healthType: yup.string().required().label("Health Type"),
 });
