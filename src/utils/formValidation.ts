@@ -24,6 +24,6 @@ export const formSchema = yup.object({
     .required()
     .min(5)
     .label("Min of 5 numbers characters"),
-  regExpDate: yup.date().transform(parseDateString).max(today).required(),
+  regExpDate: yup.date().transform(parseDateString).min(today).required(),
   healthType: yup.string().required(),
 });
