@@ -18,12 +18,12 @@ export const formSchema = yup.object({
     .min(50)
     .max(50)
     .label("Valid did must contain 50 characters"),
-  lastName: yup.string().required().min(4).label("Last name"),
+  lastName: yup.string().required().min(2).label("Last name"),
   regNumber: yup
     .number()
     .required()
     .min(5)
-    .label("Min of 5 numbers characters"),
+    .label("Registration Number must be greater than or equal to 5"),
   regExpDate: yup.date().transform(parseDateString).min(today).required(),
   healthType: yup.string().required(),
 });
