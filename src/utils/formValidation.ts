@@ -24,6 +24,6 @@ export const formSchema = yup.object({
     .required()
     .min(5)
     .label("Registration Number must be greater than or equal to 5"),
-  regExpDate: yup.date().transform(parseDateString).max(today).required(),
+  regExpDate: yup.date().transform(parseDateString).min(today).required(),
   healthType: yup.string().required(),
 });
