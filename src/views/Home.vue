@@ -40,7 +40,7 @@
           <ErrorMessage class="error-message" name="regNumber" />
         </div>
         <div class="form-block">
-          <label for="Reg Exp. Number"> Reg Exp. Number </label>
+          <label for="Reg Exp. Number"> Registration Expiration Date </label>
           <Field name="regExpDate" type="date" />
           <ErrorMessage class="error-message" name="regExpDate" />
         </div>
