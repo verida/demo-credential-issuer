@@ -11,7 +11,7 @@ const parseDateString = (value: string, originalValue: string) => {
 const today = new Date();
 
 export const formSchema = yup.object({
-  firstName: yup.string().required().label("Firstname"),
+  firstName: yup.string().required().label("First name"),
   did: yup
     .string()
     .required()
