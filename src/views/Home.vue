@@ -10,12 +10,12 @@
         class="grid-form"
       >
         <div class="form-block">
-          <label for="did"> DID </label>
+          <label for="did">DID</label>
           <Field name="did" type="text" :value="did" />
           <ErrorMessage class="error-message" name="did" />
         </div>
         <div class="form-block">
-          <label for="health-type"> Health type </label>
+          <label for="Health Type">Health Type</label>
           <Field name="healthType" as="select">
             <option value="">Select type</option>
             <option v-for="type in healthTypes" :key="type" :value="type">
@@ -25,22 +25,24 @@
           <ErrorMessage class="error-message" name="healthType" />
         </div>
         <div class="form-block">
-          <label for="firstName"> First Name </label>
+          <label for="firstName">First Name</label>
           <Field name="firstName" type="text" />
           <ErrorMessage class="error-message" name="firstName" />
         </div>
         <div class="form-block">
-          <label for="lastName"> Last Name </label>
+          <label for="lastName">Last Name</label>
           <Field name="lastName" type="text" />
           <ErrorMessage class="error-message" name="lastName" />
         </div>
         <div class="form-block">
-          <label for="Reg Number"> Registration Number </label>
+          <label for="Registration Number">Registration Number</label>
           <Field name="regNumber" type="number" />
           <ErrorMessage class="error-message" name="regNumber" />
         </div>
         <div class="form-block">
-          <label for="Reg Exp. Number"> Registration Expiration Date </label>
+          <label for="Registration Expiration Date"
+            >Registration Expiration Date</label
+          >
           <Field name="regExpDate" type="date" />
           <ErrorMessage class="error-message" name="regExpDate" />
         </div>
