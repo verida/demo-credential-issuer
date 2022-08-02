@@ -15,7 +15,7 @@
           <ErrorMessage class="error-message" name="did" />
         </div>
         <div class="form-block">
-          <label for="Health Type">Health Type</label>
+          <label for="healthType">Health Type</label>
           <Field name="healthType" as="select">
             <option value="">Select type</option>
             <option v-for="type in healthTypes" :key="type" :value="type">
@@ -35,14 +35,12 @@
           <ErrorMessage class="error-message" name="lastName" />
         </div>
         <div class="form-block">
-          <label for="Registration Number">Registration Number</label>
+          <label for="regNumber">Registration Number</label>
           <Field name="regNumber" type="number" />
           <ErrorMessage class="error-message" name="regNumber" />
         </div>
         <div class="form-block">
-          <label for="Registration Expiration Date"
-            >Registration Expiration Date</label
-          >
+          <label for="regExpDate">Registration Expiration Date</label>
           <Field name="regExpDate" type="date" />
           <ErrorMessage class="error-message" name="regExpDate" />
         </div>
