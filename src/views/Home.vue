@@ -35,12 +35,12 @@
           <ErrorMessage class="error-message" name="lastName" />
         </div>
         <div class="form-block">
-          <label for="Reg Number"> Reg Number </label>
+          <label for="Reg Number"> Registration Number </label>
           <Field name="regNumber" type="number" />
           <ErrorMessage class="error-message" name="regNumber" />
         </div>
         <div class="form-block">
-          <label for="Reg Exp. Number"> Reg Exp. Number </label>
+          <label for="Reg Exp. Number"> Registration Expiration Date </label>
           <Field name="regExpDate" type="date" />
           <ErrorMessage class="error-message" name="regExpDate" />
         </div>
