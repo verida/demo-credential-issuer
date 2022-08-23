@@ -14,7 +14,12 @@ export const formSchema = yup.object({
   firstName: yup.string().trim().required().label("First Name"),
   did: yup.string().required().length(50).label("DID"),
   lastName: yup.string().trim().required().min(2).label("Last Name"),
-  regNumber: yup.number().required().min(5).label("Registration Number"),
+  regNumber: yup
+    .number()
+    .required()
+    .min(10000, "Registration Number must b have atleast 5  characters")
+    .label("Registration Number")
+    .typeError(`Registration Number must be a number type`),
   regExpDate: yup
     .date()
     .transform(parseDateString)
