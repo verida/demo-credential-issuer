@@ -17,7 +17,7 @@ export const formSchema = yup.object({
   regNumber: yup
     .number()
     .required()
-    .min(10000, "Registration Number must have atleast 5 digits")
+    .min(10000, "Registration Number must have at least 5 digits")
     .label("Registration Number")
     .typeError(`Registration Number must be a number type`),
   regExpDate: yup
