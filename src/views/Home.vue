@@ -236,6 +236,7 @@ form {
   margin: 1rem auto 3rem auto;
 
   .btn-default {
+    cursor: pointer;
     height: 3rem;
     padding: 0px 32px;
     outline: none;

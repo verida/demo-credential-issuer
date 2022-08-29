@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { veridaClient } from "@/helpers";
 import PromiseWorker from "promise-worker";
 import Worker from "worker-loader!./worker";

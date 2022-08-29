@@ -11,19 +11,22 @@ const parseDateString = (value: string, originalValue: string) => {
 const today = new Date();
 
 export const formSchema = yup.object({
-  firstName: yup.string().required().label("First Name"),
-  did: yup
-    .string()
+  firstName: yup.string().trim().required().label("First Name"),
+  did: yup.string().required().length(50).label("DID"),
+  lastName: yup.string().trim().required().min(2).label("Last Name"),
+  regNumber: yup
+    .number()
     .required()
-    .min(50)
-    .max(50)
-    .label("A valid `DID` must contain 50 characters"),
-  lastName: yup.string().required().min(2).label("Last Name"),
-  regNumber: yup.number().required().min(5).label("Registration Number"),
+    .min(10000, "Registration Number must have at least 5 digits")
+    .label("Registration Number")
+    .typeError(`Registration Number must be a number type`),
   regExpDate: yup
     .date()
     .transform(parseDateString)
-    .min(today)
+    .min(
+      today,
+      `Registration Expiration Date field must be later than "${today.toLocaleDateString()}"`
+    )
     .required()
     .label("Registration Expiration Date"),
   healthType: yup.string().required().label("Health Type"),
