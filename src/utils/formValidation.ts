@@ -12,7 +12,7 @@ const today = new Date();
 
 export const formSchema = yup.object({
   firstName: yup.string().trim().required().label("First Name"),
-  did: yup.string().required().length(50).label("DID"),
+  did: yup.string().required().length(58).label("DID"),
   lastName: yup.string().trim().required().min(2).label("Last Name"),
   regNumber: yup
     .number()

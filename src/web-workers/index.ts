@@ -7,8 +7,8 @@ const worker = new Worker();
 
 const promiseWorker = new PromiseWorker(worker);
 
-const send = async (message: unknown) => {
-  const app = await veridaClient.initMessaging(message);
+const send = async () => {
+  const app = await veridaClient.initialiseMessagingInstance();
   return promiseWorker.postMessage({
     type: "message",
     app,
