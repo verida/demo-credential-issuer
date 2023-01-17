@@ -36,7 +36,6 @@ export default defineComponent({
       this.isOpened = !this.isOpened;
     },
     async onSuccess(context) {
-      console.log(context);
       await veridaClient.connectVault(context);
 
       // initialize messaging in a different thread
