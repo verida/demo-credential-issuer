@@ -2,7 +2,7 @@
   <header class="header">
     <div></div>
     <vda-account
-      :logo="logo"
+      :logo="veridaConnectLogo"
       :contextName="contextName"
       @onLogout="onLogout"
       @onConnected="onSuccess"
@@ -14,8 +14,7 @@
 import { defineComponent } from "vue";
 import { veridaClient } from "@/helpers";
 import webWorker from "@/web-workers";
-
-const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO_URL } = process.env;
+import { config } from "@/config";
 
 export default defineComponent({
   name: "Header",
@@ -28,8 +27,8 @@ export default defineComponent({
   data() {
     return {
       isOpened: false,
-      contextName: VUE_APP_CONTEXT_NAME,
-      logo: VUE_APP_LOGO_URL,
+      contextName: config.veridaContextName,
+      veridaConnectLogo: config.veridaConnnectLogo,
     };
   },
   methods: {
@@ -37,10 +36,11 @@ export default defineComponent({
       this.isOpened = !this.isOpened;
     },
     async onSuccess(context) {
+      console.log(context);
       await veridaClient.connectVault(context);
 
       // initialize messaging in a different thread
-      webWorker.send(context);
+      webWorker.send();
       this.setStatus(veridaClient.connected);
     },
     async onLogout() {
