@@ -1,31 +1,37 @@
-import { CONTEXT_NAME } from "@/constants";
+import { config } from "@/config";
+import { Context, Messaging } from "@verida/client-ts";
 import { Credentials } from "@verida/verifiable-credentials";
 import store from "store";
 
 class VeridaClient {
-  private context: any;
-  public did = "";
+  private context: Context | undefined;
+  public did: string | undefined;
   public connected?: boolean;
   public errors?: any;
   public credentials?: Credentials;
-  public messagingInstance: any;
+  public messagingInstance: Messaging | undefined;
 
-  public async connectVault(context: any): Promise<void> {
+  public async connectVault(context: Context): Promise<void> {
     this.context = context;
     this.connected = true;
-    store.set(CONTEXT_NAME, true);
+    store.set(config.veridaContextName, true);
     this.credentials = new Credentials();
     this.did = await context.getAccount().did();
   }
 
-  public async initMessaging(context: any) {
-    this.messagingInstance = await context.getMessaging();
-
-    return true;
+  public async initialiseMessagingInstance(): Promise<Messaging> {
+    if (this.messagingInstance) {
+      return this.messagingInstance;
+    }
+    if (!this.context) {
+      throw new Error("Context not available");
+    }
+    this.messagingInstance = await this.context.getMessaging();
+    return this.messagingInstance;
   }
 
   async createDIDJwt(data: any, subjectDid: string): Promise<any> {
-    if (this.credentials) {
+    if (this.credentials && this.context) {
       const credentialData = await this.credentials.createCredentialJWT({
         subjectId: subjectDid,
         data: data,
@@ -37,22 +43,25 @@ class VeridaClient {
 
   public async sendMessage(messageData: any, did: string): Promise<boolean> {
     const type = "inbox/type/dataSend";
-
+    const recipientContextName = "Verida: Vault";
     const data = {
       data: [messageData],
     };
     const config = {
-      recipientContextName: "Verida: Vault",
+      did,
+      recipientContextName,
     };
-    const subject = "New " + messageData.healthType + " Credential";
-    await this.messagingInstance.send(did, type, data, subject, config);
+    const subject = `New ${messageData.healthType} ${Credential}`;
+    const messaging = await this.initialiseMessagingInstance();
+    await messaging.send(did, type, data, subject, config);
     return true;
   }
 
   logout() {
-    this.context = null;
+    this.did = undefined;
+    this.context = undefined;
     this.connected = false;
-    store.remove(CONTEXT_NAME);
+    store.remove(config.veridaContextName);
   }
 }
 

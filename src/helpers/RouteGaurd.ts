@@ -1,10 +1,20 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { CONTEXT_NAME } from "@/constants";
+import { config } from "@/config";
 import store from "store";
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteRecordNormalized,
+} from "vue-router";
 
-export const routeGuard = (to: any, from: any, next: any) => {
-  if (to.matched.some((record: any) => record.meta.requiresAuth)) {
-    const isConnected = store.get(CONTEXT_NAME);
+export const routeGuard = (
+  to: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
+  next: NavigationGuardNext
+): void => {
+  if (
+    to.matched.some((record: RouteRecordNormalized) => record.meta.requiresAuth)
+  ) {
+    const isConnected = store.get(config.veridaContextName);
 
     if (isConnected) {
       next();

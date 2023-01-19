@@ -10,8 +10,7 @@
     @onError="onError"
     @onConnected="onSuccess"
     :contextName="contextName"
-    :logo="logo"
-    :openUrl="openUrl"
+    :logo="veridaConnnectLogo"
     :loginText="loginText"
   />
 </template>
@@ -20,7 +19,7 @@
 import { defineComponent } from "vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers/";
-import { CONTEXT_NAME, LOGIN_TEXT, LOGO_URL } from "@/constants";
+import { config } from "@/config";
 import webWorker from "@/web-workers";
 
 export default defineComponent({
@@ -31,10 +30,8 @@ export default defineComponent({
     return {
       isLoading: false,
       error: null,
-      openUrl: window.origin,
-      contextName: CONTEXT_NAME,
-      logo: LOGO_URL,
-      loginText: LOGIN_TEXT,
+      contextName: config.veridaContextName,
+      veridaConnnectLogo: config.veridaConnnectLogo,
       message: "",
     };
   },
@@ -44,9 +41,8 @@ export default defineComponent({
         this.isLoading = true;
         await veridaClient.connectVault(context);
 
-        // initialize messaging in a different thread
-        webWorker.send(context);
-
+        // // initialize messaging in a different thread
+        webWorker.send();
         this.$router.push({ name: "Home" });
       } catch (error: any) {
         this.error = error;

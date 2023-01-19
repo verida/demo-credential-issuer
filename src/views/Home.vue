@@ -67,11 +67,10 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { veridaClient } from "@/helpers";
 import { formSchema } from "@/utils/formValidation";
+import { config } from "@/config";
 
 import AppHeader from "@/components/Header.vue";
 import { ICredentials } from "@/interfaces/veridaClient.interfaces";
-
-const { VUE_APP_MAPAY_SCHEMA } = process.env;
 
 export default defineComponent({
   name: "Home",
@@ -100,22 +99,19 @@ export default defineComponent({
   methods: {
     async onSubmit(values: ICredentials) {
       this.isSubmitting = true;
-
       const issueDate = new Date();
-
       const { firstName, lastName, regNumber, healthType, regExpDate, did } =
         values;
-
       const formValues = {
-        name: "Your " + healthType + " Credential",
+        name: `Your ${healthType} Credential`,
         firstName,
         lastName,
         regNumber,
         healthType,
         regExpDate,
-        schema: VUE_APP_MAPAY_SCHEMA,
+        schema: config.veridaCredentialSchema,
         testTimestamp: issueDate.toISOString(),
-        summary: "Credential issued at " + issueDate.toDateString(),
+        summary: `Credential issued at ${issueDate.toDateString()}`,
       };
 
       try {
@@ -128,10 +124,9 @@ export default defineComponent({
         this.isSubmitting = false;
       }
     },
-
     setStatus(status: boolean) {
       this.connected = status;
-      this.did = veridaClient.did as string;
+      this.did = veridaClient.did;
     },
   },
 });
