@@ -14,9 +14,10 @@
 		"acorn": "8.0.1"
 	},
 	"dependencies": {
-		"@verida/account-web-vault": "^2.0.1",
-		"@verida/client-ts": "^2.0.1",
-		"@verida/verifiable-credentials": "^2.0.1",
+		"@verida/account-web-vault": "^2.2.0",
+		"@verida/client-ts": "^2.2.0",
+		"@verida/types": "^2.2.0",
+		"@verida/verifiable-credentials": "^2.2.0",
 		"@verida/vue-account": "^0.1.38",
 		"comlink": "^4.3.1",
 		"core-js": "^3.6.5",
