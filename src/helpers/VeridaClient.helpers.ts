@@ -1,17 +1,17 @@
 import { config } from "@/config";
-import { Context, Messaging } from "@verida/client-ts";
+import { IContext, IMessaging } from "@verida/types"
 import { Credentials } from "@verida/verifiable-credentials";
 import store from "store";
 
 class VeridaClient {
-  private context: Context | undefined;
+  private context: IContext | undefined;
   public did: string | undefined;
   public connected?: boolean;
   public errors?: any;
   public credentials?: Credentials;
-  public messagingInstance: Messaging | undefined;
+  public messagingInstance: IMessaging | undefined;
 
-  public async connectVault(context: Context): Promise<void> {
+  public async connectVault(context: IContext): Promise<void> {
     this.context = context;
     this.connected = true;
     store.set(config.veridaContextName, true);
@@ -19,14 +19,14 @@ class VeridaClient {
     this.did = await context.getAccount().did();
   }
 
-  public async initialiseMessagingInstance(): Promise<Messaging> {
+  public async initialiseMessagingInstance(): Promise<IMessaging> {
     if (this.messagingInstance) {
       return this.messagingInstance;
     }
     if (!this.context) {
       throw new Error("Context not available");
     }
-    this.messagingInstance = await this.context.getMessaging();
+    this.messagingInstance = await this.context.getMessaging({});
     return this.messagingInstance;
   }
 
@@ -36,6 +36,7 @@ class VeridaClient {
         subjectId: subjectDid,
         data: data,
         context: this.context,
+        schema: config.veridaCredentialSchema!
       });
       return credentialData;
     }
